@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HarmonyLib;
+﻿using HarmonyLib;
 using UnityEngine;
 
 namespace NoteCutGuide.HarmonyPatches {
@@ -34,10 +29,11 @@ namespace NoteCutGuide.HarmonyPatches {
 
 
 			t.parent = ____normalBasicNotePrefab.GetComponentInChildren<CutoutEffect>().transform;
-
-
-			t.localScale = new Vector3(0.05f, 0.5f, 0.4f);
-			t.anchoredPosition3D = new Vector3(0, 0.3f, 0);
+			
+			
+			t.localScale = new Vector3(0.05f, 1f, 0.1f);
+			t.localPosition = t.parent.position + new Vector3(0, 0.3f, 0);
+			t.pivot = t.parent.position;
 		}
 	}
 }

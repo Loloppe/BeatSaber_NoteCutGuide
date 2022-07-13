@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HarmonyLib;
 using UnityEngine;
 using IPA.Utilities;
@@ -20,7 +16,219 @@ namespace NoteCutGuide.HarmonyPatches {
 			if(g == null)
 				return;
 
+			// Reset the position just in case
+			g.position = g.parent.position;
+			g.rotation = g.parent.rotation;
+
+			// Add an offset to the position
+			g.transform.localPosition = new Vector3(0, 0.3f);
+
+			var baseValueAngle = 0f;
+			var angle = 0f;
+
+			switch(noteController.noteData.cutDirection) {
+				case NoteCutDirection.Up:
+					baseValueAngle = 270f;
+					break;
+				case NoteCutDirection.Down:
+					baseValueAngle = 90f;
+					break;
+				case NoteCutDirection.Left:
+					baseValueAngle = 0f;
+					break;
+				case NoteCutDirection.Right:
+					baseValueAngle = 180f;
+					break;
+				case NoteCutDirection.UpLeft:
+					baseValueAngle = 315f;
+					break;
+				case NoteCutDirection.UpRight:
+					baseValueAngle = 225f;
+					break;
+				case NoteCutDirection.DownLeft:
+					baseValueAngle = 45f;
+					break;
+				case NoteCutDirection.DownRight:
+					baseValueAngle = 135f;
+					break;
+			}
+
+			// Old Note Position, Data and Guide
+			var lastPos = new Vector2(-1, -1);
+			NoteData lastND = null;
+			Transform lastGuide = null;
+			var lastAngle = -1f;
+
+			if(noteController.noteData.colorType == ColorType.ColorA) {
+				lastPos = Plugin.Red;
+				lastND = Plugin.RedData;
+				lastGuide = Plugin.RedGuide;
+				lastAngle = Plugin.RedAngle;
+			} else if(noteController.noteData.colorType == ColorType.ColorB) {
+				lastPos = Plugin.Blue;
+				lastND = Plugin.BlueData;
+				lastGuide = Plugin.BlueGuide;
+				lastAngle = Plugin.BlueAngle;
+			}
+
+			// Current Note Position
+			var currentX = 0f;
+			var currentY = 0f;
+
+			// Get X position based on lineIndex
+			switch(noteController.noteData.lineIndex) {
+				case 0:
+					currentX = -0.9f;
+					break;
+				case 1:
+					currentX = -0.3f;
+					break;
+				case 2:
+					currentX = 0.3f;
+					break;
+				case 3:
+					currentX = 0.9f;
+					break;
+			}
+
+			// Get Y position based on noteLineLayer
+			switch(noteController.noteData.noteLineLayer) {
+				case NoteLineLayer.Base:
+					currentY = 0.3f;
+					break;
+				case NoteLineLayer.Upper:
+					currentY = 0.9f;
+					break;
+				case NoteLineLayer.Top:
+					currentY = 1.5f;
+					break;
+			}
+
+			var radius = 0.6f;
+
+			// Add extra offset to lastPos based on lastAngle
+			if(lastND != null) {
+
+				if(lastAngle != -1f && lastAngle != 0) {
+					lastPos.x -= (radius * Mathf.Cos(lastAngle * Mathf.PI / 180f));
+					lastPos.y -= (radius * Mathf.Sin(lastAngle * Mathf.PI / 180f));
+				}
+				else if(lastAngle == 0)
+				{
+					switch(lastND.cutDirection) {
+						case NoteCutDirection.Up:
+							lastPos.y += (radius / 2);
+							break;
+						case NoteCutDirection.Down:
+							lastPos.y += -(radius / 2);
+							break;
+						case NoteCutDirection.Right:
+							lastPos.x += (radius / 2);
+							break;
+						case NoteCutDirection.Left:
+							lastPos.x += -(radius / 2);
+							break;
+						case NoteCutDirection.UpLeft:
+							lastPos.y += (radius / 4);
+							lastPos.x += -(radius / 4);
+							break;
+						case NoteCutDirection.UpRight:
+							lastPos.y += (radius / 4);
+							lastPos.x += (radius / 4);
+							break;
+						case NoteCutDirection.DownLeft:
+							lastPos.y += -(radius / 4);
+							lastPos.x += -(radius / 4);
+							break;
+						case NoteCutDirection.DownRight:
+							lastPos.y += -(radius / 4);
+							lastPos.x += (radius / 4);
+							break;
+					}
+				}
+			}
+
+			var currentPos = new Vector2(currentX, currentY);
+
+			// This check is to skip the first blue and red note detected (angle-wise)
+			if(lastPos != new Vector2(-1, -1) && lastND != null) {
+				// Find the angle using two points in a 2D space
+				angle = (float)(Math.Atan2(lastPos.y - currentY, lastPos.x - currentX) * 180 / Math.PI);
+				if(angle < 0) {
+					angle = 360 + angle;
+				}
+
+				var defaultValue = 0f;
+
+				// This is counter-clockwise, we make all of them point right >>> (which is 0 degree)
+				switch(noteController.noteData.cutDirection) {
+					case NoteCutDirection.Up:
+						defaultValue = 90f;
+						break;
+					case NoteCutDirection.Down:
+						defaultValue = -90f;
+						break;
+					case NoteCutDirection.Right:
+						defaultValue = 180f;
+						break;
+					case NoteCutDirection.UpLeft:
+						defaultValue = 45f;
+						break;
+					case NoteCutDirection.UpRight:
+						defaultValue = 135f;
+						break;
+					case NoteCutDirection.DownLeft:
+						defaultValue = -45f;
+						break;
+					case NoteCutDirection.DownRight:
+						defaultValue = -135f;
+						break;
+				}
+
+				g.transform.RotateAround(g.parent.position, Vector3.forward, defaultValue);
+
+				// Normalize the angle to fit the note direction
+				if(baseValueAngle == 0 && angle > 180) {
+					baseValueAngle = 360;
+				}
+
+				if(angle < baseValueAngle - 40 || angle > baseValueAngle + 40) {
+					if(angle < baseValueAngle) {
+						angle = baseValueAngle - 40;
+					} else {
+						angle = baseValueAngle + 40;
+					}
+				}
+
+				// TODO: Find pattern head and apply first angle to it (swap angle)
+				// For now, it just reset the angle when it find a pattern (tower, stack, window, etc.)
+				if(lastND.time == noteController.noteData.time) {
+					lastGuide.transform.rotation = Quaternion.identity;
+					lastGuide.position = lastGuide.parent.position;
+					lastGuide.localPosition = new Vector2(0, 0.3f);
+					g.transform.RotateAround(g.parent.position, Vector3.forward, -defaultValue);
+				}
+				else {
+					// Apply the rotation around the pivot point (which is the center of the note)
+					g.transform.RotateAround(g.parent.position, Vector3.forward, angle);
+				}
+			}
+
+			// Activate
 			g.gameObject.SetActive(!isDot);
+
+			// Save position, note data, guide and angle per color
+			if(noteController.noteData.colorType == ColorType.ColorA) {
+				Plugin.Red = currentPos;
+				Plugin.RedData = noteController.noteData;
+				Plugin.RedGuide = g;
+				Plugin.RedAngle = angle;
+			} else if(noteController.noteData.colorType == ColorType.ColorB) {
+				Plugin.Blue = currentPos;
+				Plugin.BlueData = noteController.noteData;
+				Plugin.BlueGuide = g;
+				Plugin.BlueAngle = angle;
+			}
 
 			if(isDot)
 				return;

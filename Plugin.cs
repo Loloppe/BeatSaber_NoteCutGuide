@@ -1,11 +1,5 @@
 ﻿using HarmonyLib;
 using IPA;
-using IPA.Config;
-using IPA.Config.Stores;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -18,6 +12,14 @@ namespace NoteCutGuide {
 		internal static Plugin Instance;
 		internal static IPALogger Log;
 		internal static Harmony harmony;
+		internal static Vector2 Blue = new Vector2(-1, -1);
+		internal static Vector2 Red = new Vector2(-1, -1);
+		internal static NoteData BlueData = null;
+		internal static NoteData RedData = null;
+		internal static Transform BlueGuide = null;
+		internal static Transform RedGuide = null;
+		internal static float BlueAngle = -1f;
+		internal static float RedAngle = -1f;
 
 		[Init]
 		public Plugin(IPALogger logger, IPA.Config.Config conf) {
@@ -29,11 +31,24 @@ namespace NoteCutGuide {
 
 		[OnEnable]
 		public void OnEnable() {
+			SceneManager.activeSceneChanged += OnActiveSceneChanged;
 			harmony.PatchAll(Assembly.GetExecutingAssembly());
+		}
+
+		public void OnActiveSceneChanged(Scene arg0, Scene scene) {
+			Blue = new Vector2(-1, -1);
+			Red = new Vector2(-1, -1);
+			BlueData = null;
+			RedData = null;
+			BlueGuide = null;
+			RedGuide = null;
+			BlueAngle = -1f;
+			RedAngle = -1f;
 		}
 
 		[OnDisable]
 		public void OnDisable() {
+			SceneManager.activeSceneChanged -= OnActiveSceneChanged;
 			harmony.UnpatchSelf();
 		}
 	}
