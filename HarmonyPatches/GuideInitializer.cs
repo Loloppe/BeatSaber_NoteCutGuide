@@ -150,7 +150,7 @@ namespace NoteCutGuide.HarmonyPatches {
 					lastGuide.position = lastGuide.parent.position;
 					lastGuide.localPosition = new Vector2(0, 0.3f);
 					g.transform.RotateAround(g.parent.position, Vector3.forward, -defaultValue);
-				}else if(angle > baseValueAngle - 45 && angle < baseValueAngle + 45) { // Angle is within 45 degree of the base angle
+				}else if(angle >= baseValueAngle - 45 && angle <= baseValueAngle + 45) { // Angle is within 45 degree of the base angle
 					 // Apply the rotation around the pivot point (which is the center of the note)
 					g.transform.RotateAround(g.parent.position, Vector3.forward, angle);
 				}
