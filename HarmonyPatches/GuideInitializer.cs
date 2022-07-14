@@ -1,7 +1,7 @@
-﻿using System;
-using HarmonyLib;
+﻿using HarmonyLib;
 using UnityEngine;
 using IPA.Utilities;
+using NoteCutGuide.Algorithm;
 
 namespace NoteCutGuide.HarmonyPatches {
 	[HarmonyPatch(typeof(ColorNoteVisuals), nameof(ColorNoteVisuals.HandleNoteControllerDidInit))]
@@ -104,6 +104,21 @@ namespace NoteCutGuide.HarmonyPatches {
 
 			// This check is to skip the first blue and red note detected (angle-wise)
 			if(lastPos != new Vector2(-1, -1) && lastND != null) {
+				// If it's the end of a pattern, need to swap lastPos with the tail
+				if(noteController.noteData.colorType == ColorType.ColorA) {
+					if(Plugin.RedDataList.Count > 0 && lastND.time != noteController.noteData.time) {
+						var index = Helper.FindPatternIndex(Plugin.RedDataList);
+						lastPos.x = Plugin.RedList[index.Item2].x;
+						lastPos.y = Plugin.RedList[index.Item2].y;
+					}
+				} else if(noteController.noteData.colorType == ColorType.ColorB) {
+					if(Plugin.BlueDataList.Count > 0 && lastND.time != noteController.noteData.time) {
+						var index = Helper.FindPatternIndex(Plugin.BlueDataList);
+						lastPos.x = Plugin.BlueList[index.Item2].x;
+						lastPos.y = Plugin.BlueList[index.Item2].y;
+					}
+				}
+
 				// Find the angle using two points in a 2D space
 				angle = (Mathf.Atan2(lastPos.y - currentY, lastPos.x - currentX) * 180f / Mathf.PI);
 				if(angle < 0) {
@@ -150,9 +165,28 @@ namespace NoteCutGuide.HarmonyPatches {
 					lastGuide.position = lastGuide.parent.position;
 					lastGuide.localPosition = new Vector2(0, 0.3f);
 					g.transform.RotateAround(g.parent.position, Vector3.forward, -defaultValue);
+					// Pattern is found, need to find head/tail, start storing necessary data
+					if(noteController.noteData.colorType == ColorType.ColorA) {
+						if(Plugin.RedDataList.Count == 0) {
+							Plugin.RedDataList.Add(lastND);
+							Plugin.RedDataList.Add(noteController.noteData);
+							Plugin.RedList.Add(lastPos);
+							Plugin.RedList.Add(currentPos);
+						}
+					} else if(noteController.noteData.colorType == ColorType.ColorB) {
+						if(Plugin.BlueDataList.Count == 0) {
+							Plugin.BlueDataList.Add(lastND);
+							Plugin.BlueDataList.Add(noteController.noteData);
+							Plugin.BlueList.Add(lastPos);
+							Plugin.BlueList.Add(currentPos);
+						}
+					}
 				}else if(angle >= baseValueAngle - 45 && angle <= baseValueAngle + 45) { // Angle is within 45 degree of the base angle
 					 // Apply the rotation around the pivot point (which is the center of the note)
 					g.transform.RotateAround(g.parent.position, Vector3.forward, angle);
+				}
+				else { // Reset
+					g.transform.RotateAround(g.parent.position, Vector3.forward, -defaultValue);
 				}
 			}
 
@@ -164,10 +198,20 @@ namespace NoteCutGuide.HarmonyPatches {
 				Plugin.Red = currentPos;
 				Plugin.RedData = noteController.noteData;
 				Plugin.RedGuide = g;
+				// If the pattern ended, we need to clear the data
+				if(Plugin.RedDataList.Count > 0 && lastND.time != noteController.noteData.time) {
+					Plugin.RedDataList.Clear();
+					Plugin.RedList.Clear();
+				}
 			} else if(noteController.noteData.colorType == ColorType.ColorB) {
 				Plugin.Blue = currentPos;
 				Plugin.BlueData = noteController.noteData;
 				Plugin.BlueGuide = g;
+				// If the pattern ended, we need to clear the data
+				if(Plugin.BlueDataList.Count > 0 && lastND.time != noteController.noteData.time) {
+					Plugin.BlueDataList.Clear();
+					Plugin.BlueList.Clear();
+				}
 			}
 
 			if(isDot) {

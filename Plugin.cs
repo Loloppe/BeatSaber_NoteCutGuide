@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using IPA;
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -18,6 +19,10 @@ namespace NoteCutGuide {
 		internal static NoteData RedData = null;
 		internal static Transform BlueGuide = null;
 		internal static Transform RedGuide = null;
+		internal static List<NoteData> BlueDataList = new List<NoteData>();
+		internal static List<NoteData> RedDataList = new List<NoteData>();
+		internal static List<Vector2> BlueList = new List<Vector2>();
+		internal static List<Vector2> RedList = new List<Vector2>();
 
 		[Init]
 		public Plugin(IPALogger logger, IPA.Config.Config conf) {
@@ -40,6 +45,10 @@ namespace NoteCutGuide {
 			RedData = null;
 			BlueGuide = null;
 			RedGuide = null;
+			BlueDataList.Clear();
+			RedDataList.Clear();
+			BlueList.Clear();
+			RedList.Clear();
 		}
 
 		[OnDisable]
