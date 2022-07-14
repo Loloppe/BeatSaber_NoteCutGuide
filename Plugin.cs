@@ -18,8 +18,6 @@ namespace NoteCutGuide {
 		internal static NoteData RedData = null;
 		internal static Transform BlueGuide = null;
 		internal static Transform RedGuide = null;
-		internal static float BlueAngle = -1f;
-		internal static float RedAngle = -1f;
 
 		[Init]
 		public Plugin(IPALogger logger, IPA.Config.Config conf) {
@@ -42,8 +40,6 @@ namespace NoteCutGuide {
 			RedData = null;
 			BlueGuide = null;
 			RedGuide = null;
-			BlueAngle = -1f;
-			RedAngle = -1f;
 		}
 
 		[OnDisable]
