@@ -68,5 +68,13 @@ namespace NoteCutGuide.Algorithm {
 
 			return (index[index.Count - 1], index[0]);
 		}
+
+		public static float SecToBeat(float sec, float bpm) {
+			// Convert to mili
+			var ms = sec * 1000;
+			var per = 60000 / bpm;
+			var beat = ms / per;
+			return beat;
+		}
 	}
 }

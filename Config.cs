@@ -10,6 +10,7 @@ namespace NoteCutGuide
         public virtual float Width { get; set; } = 0.05f;
 		public virtual float Height { get; set; } = 1f;
 		public virtual float Depth { get; set; } = 0.05f;
+		public virtual float Angle { get; set; } = 45f;
 
 		/// <summary>
 		/// This is called whenever BSIPA reads the config from disk (including when file changes are detected).
