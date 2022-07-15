@@ -1,5 +1,4 @@
-﻿using System.IO;
-using HarmonyLib;
+﻿using HarmonyLib;
 using UnityEngine;
 
 namespace NoteCutGuide.HarmonyPatches {
@@ -25,14 +24,12 @@ namespace NoteCutGuide.HarmonyPatches {
 
 			renderer.material = ____normalBasicNotePrefab.GetComponentInChildren<MeshRenderer>().material;
 
-			renderer.material.shader = Shader.Find("Unlit");
-
 			var t = guide.AddComponent<RectTransform>();
 
 			t.parent = ____normalBasicNotePrefab.GetComponentInChildren<CutoutEffect>().transform;
 			
 			
-			t.localScale = new Vector3(0.05f, 1f, 0.05f);
+			t.localScale = new Vector3(0.05f, 0.5f, 0.05f);
 			t.localPosition = t.parent.position + new Vector3(0, 0.3f, 0);
 			t.pivot = t.parent.position;
 		}
