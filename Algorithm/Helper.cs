@@ -66,9 +66,6 @@ namespace NoteCutGuide.Algorithm {
 				}
 			}
 
-			Plugin.Log.Info("Pattern Found Head: " + noteDataList[index[index.Count - 1]].lineIndex + " : " + noteDataList[index[index.Count - 1]].noteLineLayer);
-			Plugin.Log.Info("Pattern Found Tail: " + noteDataList[index[0]].lineIndex + " : " + noteDataList[0].noteLineLayer);
-
 			return (index[index.Count - 1], index[0]);
 		}
 	}

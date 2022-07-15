@@ -20,6 +20,9 @@ namespace NoteCutGuide.HarmonyPatches {
 			g.position = g.parent.position;
 			g.rotation = g.parent.rotation;
 
+			// Change scale according to config
+			g.localScale = new Vector3(Config.Instance.Width, Config.Instance.Height, Config.Instance.Depth);
+
 			// Add an offset to the position
 			g.transform.localPosition = new Vector3(0, 0.3f);
 

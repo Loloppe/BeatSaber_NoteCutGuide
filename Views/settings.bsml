@@ -1,0 +1,11 @@
+﻿<settings-container>
+	<horizontal>
+		<text text='Guide Modification' align='Center'/>
+	</horizontal>
+	<slider-setting apply-on-change="true" value="Width" text="Width"
+					min="0.05" max="1" increment="0.05"/>
+	<slider-setting apply-on-change="true" value="Height" text="Height"
+					min="0.05" max="1" increment="0.05"/>
+	<slider-setting apply-on-change="true" value="Depth" text="Depth"
+					min="0.05" max="1" increment="0.05"/>
+</settings-container>

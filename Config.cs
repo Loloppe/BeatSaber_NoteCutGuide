@@ -1,5 +1,4 @@
-﻿/*
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using IPA.Config.Stores;
 
 [assembly: InternalsVisibleTo(GeneratedStore.AssemblyVisibilityTarget)]
@@ -8,12 +7,14 @@ namespace NoteCutGuide
     internal class Config
     {
         public static Config Instance;
-        public virtual int IntValue { get; set; } = 42; // Must be 'virtual' if you want BSIPA to detect a value change and save the config automatically.
+        public virtual float Width { get; set; } = 0.05f;
+		public virtual float Height { get; set; } = 1f;
+		public virtual float Depth { get; set; } = 0.05f;
 
-        /// <summary>
-        /// This is called whenever BSIPA reads the config from disk (including when file changes are detected).
-        /// </summary>
-        public virtual void OnReload()
+		/// <summary>
+		/// This is called whenever BSIPA reads the config from disk (including when file changes are detected).
+		/// </summary>
+		public virtual void OnReload()
         {
             // Do stuff after config is read from disk.
         }
@@ -35,4 +36,3 @@ namespace NoteCutGuide
         }
     }
 }
-*/

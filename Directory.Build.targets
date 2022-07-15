@@ -30,11 +30,6 @@
 			<FileVersion>$(BasePluginVersion)</FileVersion>
 			<InformationalVersion>$(BasePluginVersion)</InformationalVersion>
 		</PropertyGroup>
-		<GetCommitInfo ProjectDir="$(ProjectDir)">
-			<Output TaskParameter="CommitHash" PropertyName="CommitHash" />
-			<Output TaskParameter="Branch" PropertyName="Branch" />
-			<Output TaskParameter="Modified" PropertyName="GitModified" />
-		</GetCommitInfo>
 		<PropertyGroup>
 			<!--Build name for artifact/zip file-->
 			<ArtifactName>$(AssemblyName)</ArtifactName>
