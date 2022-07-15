@@ -8,7 +8,7 @@ namespace NoteCutGuide
     {
         public static Config Instance;
         public virtual float Width { get; set; } = 0.05f;
-		public virtual float Height { get; set; } = 1f;
+		public virtual float Height { get; set; } = 0.5f;
 		public virtual float Depth { get; set; } = 0.05f;
 		public virtual float Angle { get; set; } = 45f;
 
