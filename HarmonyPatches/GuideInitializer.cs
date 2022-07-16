@@ -272,9 +272,13 @@ namespace NoteCutGuide.HarmonyPatches {
 			if(ignore) {
 				lastGuide.gameObject.SetActive(false);
 				guide.gameObject.SetActive(false);
-			} else {
+			} else if(Config.Instance.Ignore && isDot) {
+				guide.gameObject.SetActive(false);
+			}
+			else {
 				guide.gameObject.SetActive(true);
 			}
+
 
 			// Save position, note data, guide and angle per color
 			if(noteController.noteData.colorType == ColorType.ColorA) {
@@ -303,7 +307,9 @@ namespace NoteCutGuide.HarmonyPatches {
 				}
 			}
 
-			if(Config.Instance.Color) {
+			if(Config.Instance.Rainbow) {
+				guide.GetComponent<MeshRenderer>().material.color = new Color(Random.Range(0.25f, 1f), Random.Range(0.25f, 1f), Random.Range(0.25f, 1f), 1f);
+			} else if(Config.Instance.Color) {
 				guide.GetComponent<MeshRenderer>().material.color = new Color(Config.Instance.Red, Config.Instance.Green, Config.Instance.Blue, Config.Instance.Opacity);
 			} else {
 				guide.GetComponent<MeshRenderer>().material.color = ColorNoteVisuals_noteColor(ref __instance);
