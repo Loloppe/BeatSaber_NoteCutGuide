@@ -9,9 +9,13 @@ namespace NoteCutGuide.HarmonyPatches {
 		static FieldAccessor<ColorNoteVisuals, Color>.Accessor ColorNoteVisuals_noteColor = FieldAccessor<ColorNoteVisuals, Color>.GetAccessor("_noteColor");
 
 		static void Postfix(ColorNoteVisuals __instance, NoteControllerBase noteController) {
+			var guide = noteController.transform.Find("NoteCube/NoteCutGuide");
+
+			if(guide == null)
+				return;
+
 			var isDot = noteController.noteData.cutDirection == NoteCutDirection.Any;
 			var bpm = BS_Utils.Plugin.LevelData.GameplayCoreSceneSetupData.difficultyBeatmap.level.beatsPerMinute;
-			var guide = noteController.transform.Find("NoteCube/NoteCutGuide");
 			var ignore = false;
 
 			var renderer = guide.GetComponent<MeshRenderer>();
@@ -20,9 +24,6 @@ namespace NoteCutGuide.HarmonyPatches {
 			} else {
 				renderer.material.shader = Plugin.DefaultShader;
 			}
-
-			if(guide == null)
-				return;
 
 			var noteData = noteController.noteData;
 
@@ -302,7 +303,11 @@ namespace NoteCutGuide.HarmonyPatches {
 				}
 			}
 
-			guide.GetComponent<MeshRenderer>().material.color = ColorNoteVisuals_noteColor(ref __instance);
+			if(Config.Instance.Color) {
+				guide.GetComponent<MeshRenderer>().material.color = new Color(Config.Instance.Red, Config.Instance.Green, Config.Instance.Blue, Config.Instance.Opacity);
+			} else {
+				guide.GetComponent<MeshRenderer>().material.color = ColorNoteVisuals_noteColor(ref __instance);
+			}
 		}
 	}
 }

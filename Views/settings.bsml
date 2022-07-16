@@ -11,5 +11,15 @@
 	<slider-setting apply-on-change="true" value="Angle" text="Angle"
 					min="0" max="45" increment="1"/>
 	<checkbox-setting apply-on-change="true" value="Bloom" text="Bloom"
+					  hover-hint="Not compatible with Custom Color"
 					/>
+	<checkbox-setting apply-on-change="true" value="Color" text="Custom Color"/>
+	<slider-setting apply-on-change="true" value="Red" text="Red"
+					min="0" max="1" increment="0.05"/>
+	<slider-setting apply-on-change="true" value="Green" text="Green"
+					min="0" max="1" increment="0.05"/>
+	<slider-setting apply-on-change="true" value="Blue" text="Blue"
+					min="0" max="1" increment="0.05"/>
+	<slider-setting apply-on-change="true" value="Opacity" text="Opacity"
+					min="0" max="1" increment="0.05"/>
 </settings-container>
