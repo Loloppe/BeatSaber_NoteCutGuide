@@ -11,6 +11,7 @@ namespace NoteCutGuide
 		public virtual float Height { get; set; } = 0.5f;
 		public virtual float Depth { get; set; } = 0.05f;
 		public virtual float Angle { get; set; } = 45f;
+		public virtual bool Bloom { get; set; } = false;
 
 		/// <summary>
 		/// This is called whenever BSIPA reads the config from disk (including when file changes are detected).

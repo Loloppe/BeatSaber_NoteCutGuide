@@ -24,6 +24,8 @@ namespace NoteCutGuide.HarmonyPatches {
 
 			renderer.material = ____normalBasicNotePrefab.GetComponentInChildren<MeshRenderer>().material;
 
+			Plugin.DefaultShader = renderer.material.shader;
+
 			var t = guide.AddComponent<RectTransform>();
 
 			t.parent = ____normalBasicNotePrefab.GetComponentInChildren<CutoutEffect>().transform;

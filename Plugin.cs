@@ -21,14 +21,13 @@ namespace NoteCutGuide {
 		internal static NoteData RedData = null;
 		internal static Transform BlueGuide = null;
 		internal static Transform RedGuide = null;
-		internal static bool BlueDot = false;
-		internal static bool RedDot = false;
-		internal static bool RedHead = false;
 		internal static bool BlueHead = false;
+		internal static bool RedHead = false;
 		internal static List<NoteData> BlueDataList = new List<NoteData>();
 		internal static List<NoteData> RedDataList = new List<NoteData>();
 		internal static List<Vector2> BlueList = new List<Vector2>();
 		internal static List<Vector2> RedList = new List<Vector2>();
+		internal static Shader DefaultShader;
 
 		static class BsmlWrapper {
 			static readonly bool hasBsml = IPA.Loader.PluginManager.GetPluginFromId("BeatSaberMarkupLanguage") != null;
@@ -69,8 +68,6 @@ namespace NoteCutGuide {
 			RedData = null;
 			BlueGuide = null;
 			RedGuide = null;
-			BlueDot = false;
-			RedDot = false;
 			BlueHead = false;
 			RedHead = false;
 			BlueDataList.Clear();
