@@ -304,9 +304,14 @@ namespace NoteCutGuide.HarmonyPatches {
 				}
 
 				if(Config.Instance.Rainbow) {
-					guide.GetComponent<MeshRenderer>().material.color = new Color(Random.Range(0.25f, 1f), Random.Range(0.25f, 1f), Random.Range(0.25f, 1f), 1f);
+					guide.GetComponent<MeshRenderer>().material.color = Helper.Rainbow();
 				} else if(Config.Instance.Color) {
-					guide.GetComponent<MeshRenderer>().material.color = new Color(Config.Instance.Red, Config.Instance.Green, Config.Instance.Blue, Config.Instance.Opacity);
+					if(noteController.noteData.colorType == ColorType.ColorA) {
+						guide.GetComponent<MeshRenderer>().material.color = Config.Instance.Left;
+					}
+					else if(noteController.noteData.colorType == ColorType.ColorB) {
+						guide.GetComponent<MeshRenderer>().material.color = Config.Instance.Right;
+					}
 				} else {
 					guide.GetComponent<MeshRenderer>().material.color = ColorNoteVisuals_noteColor(ref __instance);
 				}

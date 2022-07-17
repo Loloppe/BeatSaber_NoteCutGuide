@@ -15,14 +15,12 @@
 		<text text='Color' align='Center'/>
 	</horizontal>
 	<checkbox-setting apply-on-change="true" value="Color" text="Custom Color"/>
-	<slider-setting apply-on-change="true" value="Red" text="Red"
-					min="0" max="1" increment="0.05"/>
-	<slider-setting apply-on-change="true" value="Green" text="Green"
-					min="0" max="1" increment="0.05"/>
-	<slider-setting apply-on-change="true" value="Blue" text="Blue"
-					min="0" max="1" increment="0.05"/>
-	<slider-setting apply-on-change="true" value="Opacity" text="Opacity"
-					min="0" max="1" increment="0.05"/>
+	<color-setting text='Left' hover-hint='RGB color for the guide'
+                   value='Left' apply-on-change='true'
+                   bind-value='true' />
+	<color-setting text='Right' hover-hint='RGB color for the guide'
+                   value='Right' apply-on-change='true'
+                   bind-value='true' />
 	<horizontal>
 		<text text='Other' align='Center'/>
 	</horizontal>

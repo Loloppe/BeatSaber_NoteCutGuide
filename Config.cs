@@ -1,5 +1,8 @@
 ﻿using System.Runtime.CompilerServices;
 using IPA.Config.Stores;
+using IPA.Config.Stores.Attributes;
+using NoteCutGuide.Algorithm;
+using UnityEngine;
 
 [assembly: InternalsVisibleTo(GeneratedStore.AssemblyVisibilityTarget)]
 namespace NoteCutGuide
@@ -13,10 +16,10 @@ namespace NoteCutGuide
 		public virtual float Depth { get; set; } = 0.05f;
 		public virtual float Angle { get; set; } = 45f;
 		public virtual bool Color { get; set; } = false;
-		public virtual float Red { get; set; } = 1f;
-		public virtual float Green { get; set; } = 1f;
-		public virtual float Blue { get; set; } = 1f;
-		public virtual float Opacity { get; set; } = 1f;
+		[UseConverter(typeof(ColorConverter))]
+		public virtual Color Left { get; set; } = new Color(1f, 1f, 1f, 1f);
+		[UseConverter(typeof(ColorConverter))]
+		public virtual Color Right { get; set; } = new Color(1f, 1f, 1f, 1f);
 		public virtual bool Ignore { get; set; } = true;
 		public virtual bool Bloom { get; set; } = false;
 		public virtual bool Rainbow { get; set; } = false;

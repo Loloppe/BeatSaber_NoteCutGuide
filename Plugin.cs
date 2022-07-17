@@ -30,6 +30,8 @@ namespace NoteCutGuide {
 		internal static List<Vector2> RedList = new List<Vector2>();
 		internal static Shader DefaultShader;
 
+		internal static int RainbowPls = 0;
+
 		static class BsmlWrapper {
 			static readonly bool hasBsml = IPA.Loader.PluginManager.GetPluginFromId("BeatSaberMarkupLanguage") != null;
 
