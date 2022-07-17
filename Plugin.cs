@@ -1,4 +1,5 @@
-﻿using BeatSaberMarkupLanguage.Settings;
+﻿using BeatSaberMarkupLanguage.GameplaySetup;
+using BeatSaberMarkupLanguage.Settings;
 using HarmonyLib;
 using IPA;
 using IPA.Config.Stores;
@@ -34,15 +35,21 @@ namespace NoteCutGuide {
 
 			public static void EnableUI() {
 				void wrap() => BSMLSettings.instance.AddSettingsMenu("NoteCutGuide", "NoteCutGuide.Views.settings.bsml", Config.Instance);
+				void wrap2() => GameplaySetup.instance.AddTab("NoteCutGuide", "NoteCutGuide.Views.settings.bsml", Config.Instance, MenuType.Solo);
 
-				if(hasBsml)
+				if(hasBsml) {
 					wrap();
+					wrap2();
+				}
 			}
 			public static void DisableUI() {
 				void wrap() => BSMLSettings.instance.RemoveSettingsMenu(Config.Instance);
+				void wrap2() => GameplaySetup.instance.RemoveTab("NoteCutGuide");
 
-				if(hasBsml)
+				if(hasBsml) {
 					wrap();
+					wrap2();
+				}
 			}
 		}
 
