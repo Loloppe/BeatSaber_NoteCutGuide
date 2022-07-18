@@ -184,7 +184,7 @@ namespace NoteCutGuide.HarmonyPatches {
 							}
 						} else if(time == lastTime) { // Dot Pattern, ignore
 							ignore = true;
-						} else { // Flip if we can't find it
+						} else if(lastND.cutDirection == NoteCutDirection.Any) { // Flip if we can't find it
 							angle = lastGuide.eulerAngles.z - 180;
 						}
 					}
