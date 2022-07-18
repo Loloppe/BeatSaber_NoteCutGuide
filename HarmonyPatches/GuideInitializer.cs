@@ -230,9 +230,14 @@ namespace NoteCutGuide.HarmonyPatches {
 
 						// Reset angle if it's a window/stack/tower/etc.
 						if(lastND.time == noteData.time) {
-							lastGuide.transform.rotation = Quaternion.identity;
-							lastGuide.position = lastGuide.parent.position;
-							lastGuide.localPosition = new Vector2(0, 0.3f);
+							if(lastND.cutDirection == NoteCutDirection.Any) {
+								lastGuide.gameObject.SetActive(false);
+							}
+							else {
+								lastGuide.transform.rotation = Quaternion.identity;
+								lastGuide.position = lastGuide.parent.position;
+								lastGuide.localPosition = new Vector2(0, 0.3f);
+							}
 							guide.transform.RotateAround(guide.parent.position, Vector3.forward, -defaultValue);
 							if(noteController.noteData.colorType == ColorType.ColorA) {
 								if(Plugin.RedDataList.Count == 0) {
