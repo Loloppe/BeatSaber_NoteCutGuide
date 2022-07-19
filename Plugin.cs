@@ -29,8 +29,8 @@ namespace NoteCutGuide {
 		internal static List<Vector2> BlueList = new List<Vector2>();
 		internal static List<Vector2> RedList = new List<Vector2>();
 		internal static Shader DefaultShader;
-
 		internal static int RainbowPls = 0;
+		internal static BS_Utils.Gameplay.LevelData levelData = null;
 
 		static class BsmlWrapper {
 			static readonly bool hasBsml = IPA.Loader.PluginManager.GetPluginFromId("BeatSaberMarkupLanguage") != null;
@@ -71,6 +71,9 @@ namespace NoteCutGuide {
 		}
 
 		public void OnActiveSceneChanged(Scene arg0, Scene scene) {
+			if(BS_Utils.SceneNames.Game == "GameCore") {
+				levelData = BS_Utils.Plugin.LevelData;
+			}
 			Blue = new Vector2(-1, -1);
 			Red = new Vector2(-1, -1);
 			BlueData = null;
