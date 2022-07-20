@@ -15,6 +15,7 @@ namespace NoteCutGuide
 		public virtual float Height { get; set; } = 0.5f;
 		public virtual float Depth { get; set; } = 0.05f;
 		public virtual float Angle { get; set; } = 45f;
+		public virtual float TDAngle { get; set; } = 10f;
 		public virtual bool Color { get; set; } = false;
 		[UseConverter(typeof(ColorConverter))]
 		public virtual Color Left { get; set; } = new Color(1f, 1f, 1f, 1f);

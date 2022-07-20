@@ -28,6 +28,8 @@ namespace NoteCutGuide {
 		internal static List<NoteData> RedDataList = new List<NoteData>();
 		internal static List<Vector2> BlueList = new List<Vector2>();
 		internal static List<Vector2> RedList = new List<Vector2>();
+		internal static List<Transform> BlueGuideList = new List<Transform>();
+		internal static List<Transform> RedGuideList = new List<Transform>();
 		internal static Shader DefaultShader;
 		internal static int RainbowPls = 0;
 		internal static BS_Utils.Gameplay.LevelData levelData = null;
@@ -86,6 +88,8 @@ namespace NoteCutGuide {
 			RedDataList.Clear();
 			BlueList.Clear();
 			RedList.Clear();
+			BlueGuideList.Clear();
+			RedGuideList.Clear();
 		}
 
 		[OnDisable]

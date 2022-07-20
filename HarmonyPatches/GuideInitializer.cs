@@ -142,21 +142,158 @@ namespace NoteCutGuide.HarmonyPatches {
 
 				// If it's the end of a pattern, need to swap lastPos with the tail, so that the current note point to the right one.
 				if(noteData.colorType == ColorType.ColorA) {
-					if(Plugin.RedDataList.Count > 0 && lastND.time != noteData.time) {
+					if(Plugin.RedDataList.Count > 0 && time - lastTime > 0.1) {
 						var index = Helper.FindPatternIndex(Plugin.RedDataList);
 						lastPos.x = Plugin.RedList[index.Item2].x;
 						lastPos.y = Plugin.RedList[index.Item2].y;
+						for(int i = 0; i < Plugin.RedDataList.Count; i++) {
+							if(i != index.Item1) {
+								Plugin.RedGuideList[i].gameObject.SetActive(false); // Disable non-head notes
+							} else { // Head
+								Plugin.RedGuideList[i].gameObject.SetActive(true);
+								Plugin.RedGuideList[i].transform.rotation = Quaternion.identity;
+								Plugin.RedGuideList[i].position = Plugin.RedGuideList[i].parent.position;
+								Plugin.RedGuideList[i].localPosition = new Vector2(0, 0.3f);
+
+								if(Plugin.RedDataList[i].lineIndex == 0) {
+									if(Plugin.RedDataList[i].cutDirection == NoteCutDirection.Down) {
+										Plugin.RedGuideList[i].transform.RotateAround(Plugin.RedGuideList[i].parent.position, Vector3.forward, -Config.Instance.TDAngle);
+									} else if(Plugin.RedDataList[i].cutDirection == NoteCutDirection.Up) {
+										Plugin.RedGuideList[i].transform.RotateAround(Plugin.RedGuideList[i].parent.position, Vector3.forward, Config.Instance.TDAngle);
+									} else if(Plugin.RedDataList[i].cutDirection == NoteCutDirection.Right) {
+										if(Plugin.RedDataList[i].noteLineLayer == NoteLineLayer.Base) {
+											Plugin.RedGuideList[i].transform.RotateAround(Plugin.RedGuideList[i].parent.position, Vector3.forward, -Config.Instance.TDAngle);
+										} else if(Plugin.RedDataList[i].noteLineLayer == NoteLineLayer.Top) {
+											Plugin.RedGuideList[i].transform.RotateAround(Plugin.RedGuideList[i].parent.position, Vector3.forward, Config.Instance.TDAngle);
+										}
+									} else if(Plugin.RedDataList[i].cutDirection == NoteCutDirection.UpRight) {
+										Plugin.RedGuideList[i].transform.RotateAround(Plugin.RedGuideList[i].parent.position, Vector3.forward, -Config.Instance.TDAngle);
+									} else if(Plugin.RedDataList[i].cutDirection == NoteCutDirection.DownRight) {
+										Plugin.RedGuideList[i].transform.RotateAround(Plugin.RedGuideList[i].parent.position, Vector3.forward, Config.Instance.TDAngle);
+									}
+								} else if(Plugin.RedDataList[i].lineIndex == 1 || Plugin.RedDataList[i].lineIndex == 2) {
+									if(Plugin.RedDataList[i].cutDirection == NoteCutDirection.Left) {
+										if(Plugin.RedDataList[i].noteLineLayer == NoteLineLayer.Base) {
+											Plugin.RedGuideList[i].transform.RotateAround(Plugin.RedGuideList[i].parent.position, Vector3.forward, Config.Instance.TDAngle);
+										} else if(Plugin.RedDataList[i].noteLineLayer == NoteLineLayer.Top) {
+											Plugin.RedGuideList[i].transform.RotateAround(Plugin.RedGuideList[i].parent.position, Vector3.forward, -Config.Instance.TDAngle);
+										}
+									} else if(Plugin.RedDataList[i].cutDirection == NoteCutDirection.UpLeft) {
+										Plugin.RedGuideList[i].transform.RotateAround(Plugin.RedGuideList[i].parent.position, Vector3.forward, Config.Instance.TDAngle);
+									} else if(Plugin.RedDataList[i].cutDirection == NoteCutDirection.DownLeft) {
+										Plugin.RedGuideList[i].transform.RotateAround(Plugin.RedGuideList[i].parent.position, Vector3.forward, -Config.Instance.TDAngle);
+									} else if(Plugin.RedDataList[i].cutDirection == NoteCutDirection.Right) {
+										if(Plugin.RedDataList[i].noteLineLayer == NoteLineLayer.Base) {
+											Plugin.RedGuideList[i].transform.RotateAround(Plugin.RedGuideList[i].parent.position, Vector3.forward, -Config.Instance.TDAngle);
+										} else if(Plugin.RedDataList[i].noteLineLayer == NoteLineLayer.Top) {
+											Plugin.RedGuideList[i].transform.RotateAround(Plugin.RedGuideList[i].parent.position, Vector3.forward, Config.Instance.TDAngle);
+										}
+									} else if(Plugin.RedDataList[i].cutDirection == NoteCutDirection.UpRight) {
+										Plugin.RedGuideList[i].transform.RotateAround(Plugin.RedGuideList[i].parent.position, Vector3.forward, -Config.Instance.TDAngle);
+									} else if(Plugin.RedDataList[i].cutDirection == NoteCutDirection.DownRight) {
+										Plugin.RedGuideList[i].transform.RotateAround(Plugin.RedGuideList[i].parent.position, Vector3.forward, Config.Instance.TDAngle);
+									}
+								} else if(Plugin.RedDataList[i].lineIndex == 3) {
+									if(Plugin.RedDataList[i].cutDirection == NoteCutDirection.Down) {
+										Plugin.RedGuideList[i].transform.RotateAround(Plugin.RedGuideList[i].parent.position, Vector3.forward, Config.Instance.TDAngle);
+									} else if(Plugin.RedDataList[i].cutDirection == NoteCutDirection.Up) {
+										Plugin.RedGuideList[i].transform.RotateAround(Plugin.RedGuideList[i].parent.position, Vector3.forward, -Config.Instance.TDAngle);
+									} else if(Plugin.RedDataList[i].cutDirection == NoteCutDirection.Left) {
+										if(Plugin.RedDataList[i].noteLineLayer == NoteLineLayer.Base) {
+											Plugin.RedGuideList[i].transform.RotateAround(Plugin.RedGuideList[i].parent.position, Vector3.forward, Config.Instance.TDAngle);
+										} else if(Plugin.RedDataList[i].noteLineLayer == NoteLineLayer.Top) {
+											Plugin.RedGuideList[i].transform.RotateAround(Plugin.RedGuideList[i].parent.position, Vector3.forward, -Config.Instance.TDAngle);
+										}
+									} else if(Plugin.RedDataList[i].cutDirection == NoteCutDirection.UpLeft) {
+										Plugin.RedGuideList[i].transform.RotateAround(Plugin.RedGuideList[i].parent.position, Vector3.forward, Config.Instance.TDAngle);
+									} else if(Plugin.RedDataList[i].cutDirection == NoteCutDirection.DownLeft) {
+										Plugin.RedGuideList[i].transform.RotateAround(Plugin.RedGuideList[i].parent.position, Vector3.forward, -Config.Instance.TDAngle);
+									}
+								}
+							}
+						}
 					}
 				} else if(noteData.colorType == ColorType.ColorB) {
-					if(Plugin.BlueDataList.Count > 0 && lastND.time != noteData.time) {
+					if(Plugin.BlueDataList.Count > 0 && time - lastTime > 0.1) {
 						var index = Helper.FindPatternIndex(Plugin.BlueDataList);
 						lastPos.x = Plugin.BlueList[index.Item2].x;
 						lastPos.y = Plugin.BlueList[index.Item2].y;
+						for(int i = 0; i < Plugin.BlueDataList.Count; i++) {
+							if(i != index.Item1) {
+								Plugin.BlueGuideList[i].gameObject.SetActive(false); // Disable non-head notes
+							} else { // Head
+								Plugin.BlueGuideList[i].gameObject.SetActive(true);
+								Plugin.BlueGuideList[i].transform.rotation = Quaternion.identity;
+								Plugin.BlueGuideList[i].position = Plugin.BlueGuideList[i].parent.position;
+								Plugin.BlueGuideList[i].localPosition = new Vector2(0, 0.3f);
+
+								if(Plugin.BlueDataList[i].lineIndex == 0) {
+									if(Plugin.BlueDataList[i].cutDirection == NoteCutDirection.Down) {
+										Plugin.BlueGuideList[i].transform.RotateAround(Plugin.BlueGuideList[i].parent.position, Vector3.forward, -Config.Instance.TDAngle);
+									} else if(Plugin.BlueDataList[i].cutDirection == NoteCutDirection.Up) {
+										Plugin.BlueGuideList[i].transform.RotateAround(Plugin.BlueGuideList[i].parent.position, Vector3.forward, Config.Instance.TDAngle);
+									} else if(Plugin.BlueDataList[i].cutDirection == NoteCutDirection.Right) {
+										if(Plugin.BlueDataList[i].noteLineLayer == NoteLineLayer.Base) {
+											Plugin.BlueGuideList[i].transform.RotateAround(Plugin.BlueGuideList[i].parent.position, Vector3.forward, -Config.Instance.TDAngle);
+										} else if(Plugin.BlueDataList[i].noteLineLayer == NoteLineLayer.Top) {
+											Plugin.BlueGuideList[i].transform.RotateAround(Plugin.BlueGuideList[i].parent.position, Vector3.forward, Config.Instance.TDAngle);
+										}
+									} else if(Plugin.BlueDataList[i].cutDirection == NoteCutDirection.UpRight) {
+										Plugin.BlueGuideList[i].transform.RotateAround(Plugin.BlueGuideList[i].parent.position, Vector3.forward, -Config.Instance.TDAngle);
+									} else if(Plugin.BlueDataList[i].cutDirection == NoteCutDirection.DownRight) {
+										Plugin.BlueGuideList[i].transform.RotateAround(Plugin.BlueGuideList[i].parent.position, Vector3.forward, Config.Instance.TDAngle);
+									}
+								} else if(Plugin.BlueDataList[i].lineIndex == 1 || Plugin.BlueDataList[i].lineIndex == 2) {
+									if(Plugin.BlueDataList[i].cutDirection == NoteCutDirection.Left) {
+										if(Plugin.BlueDataList[i].noteLineLayer == NoteLineLayer.Base) {
+											Plugin.BlueGuideList[i].transform.RotateAround(Plugin.BlueGuideList[i].parent.position, Vector3.forward, Config.Instance.TDAngle);
+										} else if(Plugin.BlueDataList[i].noteLineLayer == NoteLineLayer.Top) {
+											Plugin.BlueGuideList[i].transform.RotateAround(Plugin.BlueGuideList[i].parent.position, Vector3.forward, -Config.Instance.TDAngle);
+										}
+									} else if(Plugin.BlueDataList[i].cutDirection == NoteCutDirection.UpLeft) {
+										Plugin.BlueGuideList[i].transform.RotateAround(Plugin.BlueGuideList[i].parent.position, Vector3.forward, Config.Instance.TDAngle);
+									} else if(Plugin.BlueDataList[i].cutDirection == NoteCutDirection.DownLeft) {
+										Plugin.BlueGuideList[i].transform.RotateAround(Plugin.BlueGuideList[i].parent.position, Vector3.forward, -Config.Instance.TDAngle);
+									} else if(Plugin.BlueDataList[i].cutDirection == NoteCutDirection.Right) {
+										if(Plugin.BlueDataList[i].noteLineLayer == NoteLineLayer.Base) {
+											Plugin.BlueGuideList[i].transform.RotateAround(Plugin.BlueGuideList[i].parent.position, Vector3.forward, -Config.Instance.TDAngle);
+										} else if(Plugin.BlueDataList[i].noteLineLayer == NoteLineLayer.Top) {
+											Plugin.BlueGuideList[i].transform.RotateAround(Plugin.BlueGuideList[i].parent.position, Vector3.forward, Config.Instance.TDAngle);
+										}
+									} else if(Plugin.BlueDataList[i].cutDirection == NoteCutDirection.UpRight) {
+										Plugin.BlueGuideList[i].transform.RotateAround(Plugin.BlueGuideList[i].parent.position, Vector3.forward, -Config.Instance.TDAngle);
+									} else if(Plugin.BlueDataList[i].cutDirection == NoteCutDirection.DownRight) {
+										Plugin.BlueGuideList[i].transform.RotateAround(Plugin.BlueGuideList[i].parent.position, Vector3.forward, Config.Instance.TDAngle);
+									}
+								} else if(Plugin.BlueDataList[i].lineIndex == 3) {
+									if(Plugin.BlueDataList[i].cutDirection == NoteCutDirection.Down) {
+										Plugin.BlueGuideList[i].transform.RotateAround(Plugin.BlueGuideList[i].parent.position, Vector3.forward, Config.Instance.TDAngle);
+									} else if(Plugin.BlueDataList[i].cutDirection == NoteCutDirection.Up) {
+										Plugin.BlueGuideList[i].transform.RotateAround(Plugin.BlueGuideList[i].parent.position, Vector3.forward, -Config.Instance.TDAngle);
+									} else if(Plugin.BlueDataList[i].cutDirection == NoteCutDirection.Left) {
+										if(Plugin.BlueDataList[i].noteLineLayer == NoteLineLayer.Base) {
+											Plugin.BlueGuideList[i].transform.RotateAround(Plugin.BlueGuideList[i].parent.position, Vector3.forward, Config.Instance.TDAngle);
+										} else if(Plugin.BlueDataList[i].noteLineLayer == NoteLineLayer.Top) {
+											Plugin.BlueGuideList[i].transform.RotateAround(Plugin.BlueGuideList[i].parent.position, Vector3.forward, -Config.Instance.TDAngle);
+										}
+									} else if(Plugin.BlueDataList[i].cutDirection == NoteCutDirection.UpLeft) {
+										Plugin.BlueGuideList[i].transform.RotateAround(Plugin.BlueGuideList[i].parent.position, Vector3.forward, Config.Instance.TDAngle);
+									} else if(Plugin.BlueDataList[i].cutDirection == NoteCutDirection.DownLeft) {
+										Plugin.BlueGuideList[i].transform.RotateAround(Plugin.BlueGuideList[i].parent.position, Vector3.forward, -Config.Instance.TDAngle);
+									}
+								}
+							}
+						}
 					}
 				}
 
-				// Find the angle using two points in a 2D space
-				angle = (Mathf.Atan2(lastPos.y - currentY, lastPos.x - currentX) * 180f / Mathf.PI);
+				// Reset on slow middle lane down and up swing for TD
+				if(time - lastTime > 0.5 && (noteData.cutDirection == NoteCutDirection.Down || noteData.cutDirection == NoteCutDirection.Up) && (noteData.lineIndex == 1 || noteData.lineIndex == 2)) {
+					angle = 0;
+				} else {
+					// Find the angle using two points in a 2D space
+					angle = (Mathf.Atan2(lastPos.y - currentY, lastPos.x - currentX) * 180f / Mathf.PI);
+				}
 
 				// Here we handle note of any cut direction
 				if(noteController.noteData.cutDirection == NoteCutDirection.Any) {
@@ -168,18 +305,18 @@ namespace NoteCutGuide.HarmonyPatches {
 					}
 
 					// Pattern with a direction, in this case we reset the head angle
-					if(time - lastTime < 0.2 && time - lastTime > 0 && noteController.noteData.cutDirection == NoteCutDirection.Any && lastND.cutDirection != NoteCutDirection.Any) {
+					if(time - lastTime < 0.1 && noteController.noteData.cutDirection == NoteCutDirection.Any && lastND.cutDirection != NoteCutDirection.Any) {
 						if(noteController.noteData.colorType == ColorType.ColorA) {
 							Plugin.RedHead = true;
 						} else if(noteController.noteData.colorType == ColorType.ColorB) {
 							Plugin.BlueHead = true;
 						}
-						
+
 						// Reset
 						lastGuide.transform.rotation = Quaternion.identity;
 						lastGuide.position = lastGuide.parent.position;
 						lastGuide.localPosition = new Vector2(0, 0.3f);
-					} else if(time - lastTime < 0.2 && time - lastTime > 0 && lastND.cutDirection == NoteCutDirection.Any) { // Pattern without a direction
+					} else if(time - lastTime < 0.1 && lastND.cutDirection == NoteCutDirection.Any) { // Pattern without a direction
 						if(noteController.noteData.colorType == ColorType.ColorA) {
 							if(Plugin.RedHead) {
 								guide.transform.RotateAround(guide.parent.position, Vector3.forward, angle); // Point to last note
@@ -239,8 +376,29 @@ namespace NoteCutGuide.HarmonyPatches {
 					}
 					guide.transform.RotateAround(guide.parent.position, Vector3.forward, defaultValue);
 
+					// If the pattern ended, we need to clear the data
+					if(noteController.noteData.colorType == ColorType.ColorA) {
+						if(Plugin.RedDataList.Count > 0 && time - lastTime > 0.1) {
+							Plugin.RedDataList.Clear();
+							Plugin.RedList.Clear();
+							Plugin.RedGuideList.Clear();
+						}
+						if(Plugin.RedHead && time - lastTime > 0.1) {
+							Plugin.RedHead = false;
+						}
+					} else if(noteController.noteData.colorType == ColorType.ColorB) {
+						if(Plugin.BlueDataList.Count > 0 && time - lastTime > 0.1) {
+							Plugin.BlueDataList.Clear();
+							Plugin.BlueList.Clear();
+							Plugin.BlueGuideList.Clear();
+						}
+						if(Plugin.BlueHead && time - lastTime > 0.1) {
+							Plugin.BlueHead = false;
+						}
+					}
+
 					// Reset angle if it's a window/stack/tower/etc.
-					if(lastND.time == noteData.time) {
+					if(time - lastTime < 0.1) {
 						if(lastND.cutDirection == NoteCutDirection.Any) {
 							lastGuide.gameObject.SetActive(false);
 						} else {
@@ -249,15 +407,19 @@ namespace NoteCutGuide.HarmonyPatches {
 							lastGuide.localPosition = new Vector2(0, 0.3f);
 						}
 						guide.transform.RotateAround(guide.parent.position, Vector3.forward, -defaultValue);
+
 						if(noteController.noteData.colorType == ColorType.ColorA) {
 							if(Plugin.RedDataList.Count == 0) {
 								Plugin.RedDataList.Add(lastND);
 								Plugin.RedDataList.Add(noteData);
 								Plugin.RedList.Add(lastPos);
 								Plugin.RedList.Add(currentPos);
+								Plugin.RedGuideList.Add(lastGuide);
+								Plugin.RedGuideList.Add(guide);
 							} else {
 								Plugin.RedDataList.Add(noteController.noteData);
 								Plugin.RedList.Add(currentPos);
+								Plugin.RedGuideList.Add(guide);
 							}
 						} else if(noteController.noteData.colorType == ColorType.ColorB) {
 							if(Plugin.BlueDataList.Count == 0) {
@@ -265,9 +427,12 @@ namespace NoteCutGuide.HarmonyPatches {
 								Plugin.BlueDataList.Add(noteData);
 								Plugin.BlueList.Add(lastPos);
 								Plugin.BlueList.Add(currentPos);
+								Plugin.BlueGuideList.Add(lastGuide);
+								Plugin.BlueGuideList.Add(guide);
 							} else {
 								Plugin.BlueDataList.Add(noteData);
-								Plugin.RedList.Add(currentPos);
+								Plugin.BlueList.Add(currentPos);
+								Plugin.BlueGuideList.Add(guide);
 							}
 						}
 					} else if(angle >= baseValueAngle - Config.Instance.Angle && angle <= baseValueAngle + Config.Instance.Angle) { // If the angle is within limit
@@ -285,26 +450,10 @@ namespace NoteCutGuide.HarmonyPatches {
 				Plugin.Red = currentPos;
 				Plugin.RedGuide = guide;
 				Plugin.RedData = noteData;
-				// If the pattern ended, we need to clear the data
-				if(Plugin.RedDataList.Count > 0 && lastND.time != noteController.noteData.time) {
-					Plugin.RedDataList.Clear();
-					Plugin.RedList.Clear();
-				}
-				if(Plugin.RedHead && time - lastTime >= 0.2) {
-					Plugin.RedHead = false;
-				}
 			} else if(noteController.noteData.colorType == ColorType.ColorB) {
 				Plugin.Blue = currentPos;
 				Plugin.BlueGuide = guide;
 				Plugin.BlueData = noteData;
-				// If the pattern ended, we need to clear the data
-				if(Plugin.BlueDataList.Count > 0 && lastND.time != noteController.noteData.time) {
-					Plugin.BlueDataList.Clear();
-					Plugin.BlueList.Clear();
-				}
-				if(Plugin.BlueHead && time - lastTime >= 0.2) {
-					Plugin.BlueHead = false;
-				}
 			}
 
 			// Fake bloom

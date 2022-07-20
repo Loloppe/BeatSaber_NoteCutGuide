@@ -12,6 +12,11 @@
 	<slider-setting apply-on-change="true" value="Angle" text="Angle"
 					min="0" max="45" increment="1"/>
 	<horizontal>
+		<text text='Time Dependence' align='Center'/>
+	</horizontal>
+	<slider-setting apply-on-change="true" value="TDAngle" text="Pattern Angle"
+					min="0" max="45" increment="1"/>
+	<horizontal>
 		<text text='Color' align='Center'/>
 	</horizontal>
 	<checkbox-setting apply-on-change="true" value="Color" text="Custom Color"/>
