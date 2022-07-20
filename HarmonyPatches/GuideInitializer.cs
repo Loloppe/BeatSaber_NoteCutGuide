@@ -151,10 +151,6 @@ namespace NoteCutGuide.HarmonyPatches {
 								Plugin.RedGuideList[i].gameObject.SetActive(false); // Disable non-head notes
 							} else { // Head
 								Plugin.RedGuideList[i].gameObject.SetActive(true);
-								Plugin.RedGuideList[i].transform.rotation = Quaternion.identity;
-								Plugin.RedGuideList[i].position = Plugin.RedGuideList[i].parent.position;
-								Plugin.RedGuideList[i].localPosition = new Vector2(0, 0.3f);
-
 								if(Plugin.RedDataList[i].lineIndex == 0) {
 									if(Plugin.RedDataList[i].cutDirection == NoteCutDirection.Down) {
 										Plugin.RedGuideList[i].transform.RotateAround(Plugin.RedGuideList[i].parent.position, Vector3.forward, -Config.Instance.TDAngle);
@@ -223,10 +219,6 @@ namespace NoteCutGuide.HarmonyPatches {
 								Plugin.BlueGuideList[i].gameObject.SetActive(false); // Disable non-head notes
 							} else { // Head
 								Plugin.BlueGuideList[i].gameObject.SetActive(true);
-								Plugin.BlueGuideList[i].transform.rotation = Quaternion.identity;
-								Plugin.BlueGuideList[i].position = Plugin.BlueGuideList[i].parent.position;
-								Plugin.BlueGuideList[i].localPosition = new Vector2(0, 0.3f);
-
 								if(Plugin.BlueDataList[i].lineIndex == 0) {
 									if(Plugin.BlueDataList[i].cutDirection == NoteCutDirection.Down) {
 										Plugin.BlueGuideList[i].transform.RotateAround(Plugin.BlueGuideList[i].parent.position, Vector3.forward, -Config.Instance.TDAngle);
@@ -282,13 +274,13 @@ namespace NoteCutGuide.HarmonyPatches {
 										Plugin.BlueGuideList[i].transform.RotateAround(Plugin.BlueGuideList[i].parent.position, Vector3.forward, -Config.Instance.TDAngle);
 									}
 								}
-							}
+							} 
 						}
 					}
 				}
 
 				// Reset on slow middle lane down and up swing for TD
-				if(time - lastTime > 0.5 && (noteData.cutDirection == NoteCutDirection.Down || noteData.cutDirection == NoteCutDirection.Up) && (noteData.lineIndex == 1 || noteData.lineIndex == 2)) {
+				if(time - lastTime > (0.5 * bpm / 200) && (noteData.cutDirection == NoteCutDirection.Down || noteData.cutDirection == NoteCutDirection.Up) && (noteData.lineIndex == 1 || noteData.lineIndex == 2)) {
 					angle = 0;
 				} else {
 					// Find the angle using two points in a 2D space
