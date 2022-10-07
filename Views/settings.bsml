@@ -1,7 +1,7 @@
 ﻿<settings-container>
 	<checkbox-setting apply-on-change="true" value="Enabled" text="Enable Plugin"/>
 	<horizontal>
-		<text text='Guide' align='Center'/>
+		<text text='Guide Size' align='Center'/>
 	</horizontal>
 	<slider-setting apply-on-change="true" value="Width" text="Width"
 					min="0.05" max="0.5" increment="0.05"/>
@@ -9,13 +9,15 @@
 					min="0.05" max="1" increment="0.05"/>
 	<slider-setting apply-on-change="true" value="Depth" text="Depth"
 					min="0.05" max="0.5" increment="0.05"/>
-	<slider-setting apply-on-change="true" value="Angle" text="Angle"
-					min="0" max="45" increment="1"/>
 	<horizontal>
-		<text text='Time Dependence' align='Center'/>
+		<text text='Guide Position' align='Center'/>
 	</horizontal>
-	<slider-setting apply-on-change="true" value="TDAngle" text="Pattern Angle"
-					min="0" max="45" increment="1"/>
+	<slider-setting apply-on-change="true" value="X" text="X"
+					min="-1" max="1" increment="0.05"/>
+	<slider-setting apply-on-change="true" value="Y" text="Y"
+					min="-1" max="1" increment="0.05"/>
+	<slider-setting apply-on-change="true" value="Z" text="Z"
+					min="-1" max="1" increment="0.05"/>
 	<horizontal>
 		<text text='Color' align='Center'/>
 	</horizontal>

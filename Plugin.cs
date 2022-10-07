@@ -16,20 +16,6 @@ namespace NoteCutGuide {
 		internal static IPALogger Log;
 		internal static Harmony harmony;
 
-		internal static Vector2 Blue = new Vector2(-1, -1);
-		internal static Vector2 Red = new Vector2(-1, -1);
-		internal static NoteData BlueData = null;
-		internal static NoteData RedData = null;
-		internal static Transform BlueGuide = null;
-		internal static Transform RedGuide = null;
-		internal static bool BlueHead = false;
-		internal static bool RedHead = false;
-		internal static List<NoteData> BlueDataList = new List<NoteData>();
-		internal static List<NoteData> RedDataList = new List<NoteData>();
-		internal static List<Vector2> BlueList = new List<Vector2>();
-		internal static List<Vector2> RedList = new List<Vector2>();
-		internal static List<Transform> BlueGuideList = new List<Transform>();
-		internal static List<Transform> RedGuideList = new List<Transform>();
 		internal static Shader DefaultShader;
 		internal static int RainbowPls = 0;
 		internal static BS_Utils.Gameplay.LevelData levelData = null;
@@ -76,20 +62,6 @@ namespace NoteCutGuide {
 			if(BS_Utils.SceneNames.Game == "GameCore") {
 				levelData = BS_Utils.Plugin.LevelData;
 			}
-			Blue = new Vector2(-1, -1);
-			Red = new Vector2(-1, -1);
-			BlueData = null;
-			RedData = null;
-			BlueGuide = null;
-			RedGuide = null;
-			BlueHead = false;
-			RedHead = false;
-			BlueDataList.Clear();
-			RedDataList.Clear();
-			BlueList.Clear();
-			RedList.Clear();
-			BlueGuideList.Clear();
-			RedGuideList.Clear();
 		}
 
 		[OnDisable]
