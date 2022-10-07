@@ -14,6 +14,9 @@ namespace NoteCutGuide
 		public virtual float Width { get; set; } = 0.05f;
 		public virtual float Height { get; set; } = 0.5f;
 		public virtual float Depth { get; set; } = 0.05f;
+		public virtual float X { get; set; } = 0f;
+		public virtual float Y { get; set; } = 0.3f;
+		public virtual float Z { get; set; } = 0f;
 		public virtual float Angle { get; set; } = 45f;
 		public virtual float TDAngle { get; set; } = 10f;
 		public virtual bool Color { get; set; } = false;

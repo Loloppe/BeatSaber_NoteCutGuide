@@ -45,7 +45,7 @@ namespace NoteCutGuide.HarmonyPatches {
 			guide.localScale = new Vector3(Config.Instance.Width, Config.Instance.Height, Config.Instance.Depth);
 
 			// Add an offset to the position
-			guide.transform.localPosition = new Vector3(0, 0.3f);
+			guide.transform.localPosition = new Vector3(Config.Instance.X, Config.Instance.Y, Config.Instance.Z);
 
 			// To point right and then toward previous note
 			var angle = 0f;
