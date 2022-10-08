@@ -25,7 +25,7 @@ namespace NoteCutGuide {
 
 			public static void EnableUI() {
 				void wrap() => BSMLSettings.instance.AddSettingsMenu("NoteCutGuide", "NoteCutGuide.Views.settings.bsml", Config.Instance);
-				void wrap2() => GameplaySetup.instance.AddTab("NoteCutGuide", "NoteCutGuide.Views.settings.bsml", Config.Instance, MenuType.Solo);
+				void wrap2() => GameplaySetup.instance.AddTab("NoteCutGuide", "NoteCutGuide.Views.settings.bsml", Config.Instance, MenuType.All);
 
 				if(hasBsml) {
 					wrap();
