@@ -44,26 +44,35 @@ namespace NoteCutGuide.HarmonyPatches {
 			// Add an offset to the position
 			guide.transform.localPosition = new Vector3(Config.Instance.X, Config.Instance.Y, Config.Instance.Z);
 
-			// Fake bloom
+			// Bloom
 			var renderer = guide.GetComponent<MeshRenderer>();
 			if(Config.Instance.Bloom) {
-				renderer.material.shader = Shader.Find("Unlit");
+				renderer.material.shader = Shader.Find("UI/Default");
 			} else {
 				renderer.material.shader = Plugin.DefaultShader;
 			}
 
-			// Fake bloom is not compatible with any of this
-			if(!Config.Instance.Bloom) {
-				if(Config.Instance.Rainbow) {
-					renderer.material.color = Helper.Rainbow(); // Random colors
-				} else if(Config.Instance.Color) {
-					if(noteController.noteData.colorType == ColorType.ColorA) { // Custom colors
-						renderer.material.color = Config.Instance.Left;
+			if(Config.Instance.Rainbow) { // Random colors
+				renderer.material.color = Helper.Rainbow();
+			} else if(Config.Instance.Color) { // Custom colors
+				if(Config.Instance.Bloom) {
+					if(noteController.noteData.colorType == ColorType.ColorA) {
+						renderer.material.color = ColorExtensions.ColorWithAlpha(Config.Instance.Left, Config.Instance.Brightness);
 					} else if(noteController.noteData.colorType == ColorType.ColorB) {
-						renderer.material.color = Config.Instance.Right;
+						renderer.material.color = ColorExtensions.ColorWithAlpha(Config.Instance.Right, Config.Instance.Brightness);
 					}
 				} else {
-					renderer.material.color = ColorNoteVisuals_noteColor(ref __instance); // Default colors
+					if(noteController.noteData.colorType == ColorType.ColorA) {
+						renderer.material.color = ColorExtensions.ColorWithAlpha(Config.Instance.Left, 1f);
+					} else if(noteController.noteData.colorType == ColorType.ColorB) {
+						renderer.material.color = ColorExtensions.ColorWithAlpha(Config.Instance.Right, 1f);
+					}
+				}
+			} else { // Default colors
+				if(Config.Instance.Bloom) {
+					renderer.material.color = ColorExtensions.ColorWithAlpha(ColorNoteVisuals_noteColor(ref __instance), Config.Instance.Brightness); 
+				} else {
+					renderer.material.color = ColorExtensions.ColorWithAlpha(ColorNoteVisuals_noteColor(ref __instance), 1f);
 				}
 			}
 

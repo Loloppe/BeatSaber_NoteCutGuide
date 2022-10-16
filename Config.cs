@@ -24,6 +24,7 @@ namespace NoteCutGuide
 		public virtual Color Right { get; set; } = new Color(1f, 1f, 1f, 1f);
 		public virtual bool Ignore { get; set; } = true;
 		public virtual bool Bloom { get; set; } = false;
+		public virtual float Brightness { get; set; } = 0.75f;
 		public virtual bool Rainbow { get; set; } = false;
 
 		/// <summary>
