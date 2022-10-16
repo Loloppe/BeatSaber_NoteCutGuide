@@ -31,7 +31,7 @@ namespace NoteCutGuide {
 		internal static List<Transform> BlueGuideList = new List<Transform>();
 		internal static List<Transform> RedGuideList = new List<Transform>();
 		internal static Shader DefaultShader;
-		internal static int RainbowPls = 0;
+		internal static float RainbowPls = 0f;
 		internal static BS_Utils.Gameplay.LevelData levelData = null;
 
 		static class BsmlWrapper {

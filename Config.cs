@@ -28,6 +28,7 @@ namespace NoteCutGuide
 		public virtual bool Bloom { get; set; } = false;
 		public virtual float Brightness { get; set; } = 0.75f;
 		public virtual bool Rainbow { get; set; } = false;
+		public virtual float Speed { get; set; } = 0.01f;
 
 		/// <summary>
 		/// This is called whenever BSIPA reads the config from disk (including when file changes are detected).

@@ -456,27 +456,29 @@ namespace NoteCutGuide.HarmonyPatches {
 				renderer.material.shader = Plugin.DefaultShader;
 			}
 
-			// We don't really want to use Brightness if there's no bloom
-			// TODO: Make Rainbow actually decent, right now it's just bad
-			if(Config.Instance.Rainbow) {
-				renderer.material.color = Helper.Rainbow(); // Random colors
-			} else if(Config.Instance.Color) {
+			if(Config.Instance.Rainbow) { // Random colors
 				if(Config.Instance.Bloom) {
-					if(noteController.noteData.colorType == ColorType.ColorA) { // Custom colors
+					renderer.material.color = ColorExtensions.ColorWithAlpha(renderer.material.color = Helper.Rainbow(), Config.Instance.Brightness);
+				} else {
+					renderer.material.color = ColorExtensions.ColorWithAlpha(renderer.material.color = Helper.Rainbow(), 1f); 
+				}
+			} else if(Config.Instance.Color) { // Custom colors
+				if(Config.Instance.Bloom) {
+					if(noteController.noteData.colorType == ColorType.ColorA) { 
 						renderer.material.color = ColorExtensions.ColorWithAlpha(Config.Instance.Left, Config.Instance.Brightness);
 					} else if(noteController.noteData.colorType == ColorType.ColorB) {
 						renderer.material.color = ColorExtensions.ColorWithAlpha(Config.Instance.Right, Config.Instance.Brightness);
 					}
 				} else {
-					if(noteController.noteData.colorType == ColorType.ColorA) { // Custom colors
+					if(noteController.noteData.colorType == ColorType.ColorA) { 
 						renderer.material.color = ColorExtensions.ColorWithAlpha(Config.Instance.Left, 1f);
 					} else if(noteController.noteData.colorType == ColorType.ColorB) {
 						renderer.material.color = ColorExtensions.ColorWithAlpha(Config.Instance.Right, 1f);
 					}
 				}
-			} else {
+			} else { // Default colors
 				if(Config.Instance.Bloom) {
-					renderer.material.color = ColorExtensions.ColorWithAlpha(ColorNoteVisuals_noteColor(ref __instance), Config.Instance.Brightness); // Default colors
+					renderer.material.color = ColorExtensions.ColorWithAlpha(ColorNoteVisuals_noteColor(ref __instance), Config.Instance.Brightness);
 				} else {
 					renderer.material.color = ColorExtensions.ColorWithAlpha(ColorNoteVisuals_noteColor(ref __instance), 1f);
 				}
