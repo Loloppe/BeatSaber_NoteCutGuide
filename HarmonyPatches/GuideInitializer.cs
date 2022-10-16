@@ -460,12 +460,12 @@ namespace NoteCutGuide.HarmonyPatches {
 				renderer.material.color = Helper.Rainbow(); // Random colors
 			} else if(Config.Instance.Color) {
 				if(noteController.noteData.colorType == ColorType.ColorA) { // Custom colors
-					renderer.material.color = Config.Instance.Left;
+					renderer.material.color = ColorExtensions.ColorWithAlpha(Config.Instance.Left, Config.Instance.Brightness);
 				} else if(noteController.noteData.colorType == ColorType.ColorB) {
-					renderer.material.color = Config.Instance.Right;
+					renderer.material.color = ColorExtensions.ColorWithAlpha(Config.Instance.Right, Config.Instance.Brightness);
 				}
 			} else {
-				renderer.material.color = ColorNoteVisuals_noteColor(ref __instance); // Default colors
+				renderer.material.color = ColorExtensions.ColorWithAlpha(ColorNoteVisuals_noteColor(ref __instance), Config.Instance.Brightness); // Default colors
 			}
 
 			// Activate/Disable
