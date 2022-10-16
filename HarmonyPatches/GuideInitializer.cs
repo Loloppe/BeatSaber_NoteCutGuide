@@ -451,24 +451,21 @@ namespace NoteCutGuide.HarmonyPatches {
 			// Fake bloom
 			var renderer = guide.GetComponent<MeshRenderer>();
 			if(Config.Instance.Bloom) {
-				renderer.material.shader = Shader.Find("Unlit");
+				renderer.material.shader = Shader.Find("UI/Default");
 			} else {
 				renderer.material.shader = Plugin.DefaultShader;
 			}
 
-			// Fake bloom is not compatible with any of this
-			if(!Config.Instance.Bloom) {
-				if(Config.Instance.Rainbow) {
-					renderer.material.color = Helper.Rainbow(); // Random colors
-				} else if(Config.Instance.Color) {
-					if(noteController.noteData.colorType == ColorType.ColorA) { // Custom colors
-						renderer.material.color = Config.Instance.Left;
-					} else if(noteController.noteData.colorType == ColorType.ColorB) {
-						renderer.material.color = Config.Instance.Right;
-					}
-				} else {
-					renderer.material.color = ColorNoteVisuals_noteColor(ref __instance); // Default colors
+			if(Config.Instance.Rainbow) {
+				renderer.material.color = Helper.Rainbow(); // Random colors
+			} else if(Config.Instance.Color) {
+				if(noteController.noteData.colorType == ColorType.ColorA) { // Custom colors
+					renderer.material.color = Config.Instance.Left;
+				} else if(noteController.noteData.colorType == ColorType.ColorB) {
+					renderer.material.color = Config.Instance.Right;
 				}
+			} else {
+				renderer.material.color = ColorNoteVisuals_noteColor(ref __instance); // Default colors
 			}
 
 			// Activate/Disable

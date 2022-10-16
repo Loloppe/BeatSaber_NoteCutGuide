@@ -40,9 +40,9 @@
 	</horizontal>
 	<checkbox-setting apply-on-change="true" value="Ignore" text="Ignore Dot Note"/>
 	<checkbox-setting apply-on-change="true" value="Bloom" text="Bloom"
-				  hover-hint="Not compatible with Custom Color/Rainbow"
+				  hover-hint="Compatible with Custom Color/Rainbow"
 					/>
 	<checkbox-setting apply-on-change="true" value="Rainbow" text="Rainbow"
-				  hover-hint="Not compatible with Custom Color/Bloom"
+				  hover-hint="Not compatible with Custom Color"
 					/>
 </settings-container>
