@@ -17,7 +17,7 @@ namespace NoteCutGuide {
 		internal static Harmony harmony;
 
 		internal static Shader DefaultShader;
-		internal static int RainbowPls = 0;
+		internal static float RainbowPls = 0f;
 		internal static BS_Utils.Gameplay.LevelData levelData = null;
 
 		static class BsmlWrapper {

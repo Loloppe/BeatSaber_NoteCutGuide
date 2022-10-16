@@ -53,7 +53,7 @@ namespace NoteCutGuide.HarmonyPatches {
 			}
 
 			if(Config.Instance.Rainbow) { // Random colors
-				renderer.material.color = Helper.Rainbow();
+				renderer.material.color = ColorExtensions.ColorWithAlpha(renderer.material.color = Helper.Rainbow(), 1f);
 			} else if(Config.Instance.Color) { // Custom colors
 				if(Config.Instance.Bloom) {
 					if(noteController.noteData.colorType == ColorType.ColorA) {

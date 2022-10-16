@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace NoteCutGuide.Algorithm {
@@ -79,41 +80,14 @@ namespace NoteCutGuide.Algorithm {
 		}
 
 		public static Color Rainbow() {
-			Color c = new Color(1, 0, 1, 1);
-			switch(Plugin.RainbowPls) {
-				case 0: 
-					c = new Color(0, 0, 0, 1); // White
-					break;
-				case 1:
-					c = new Color(1, 0, 0, 1); // Red
-					break;
-				case 2:
-					c = new Color(0, 1, 0, 1); // Green
-					break;
-				case 3:
-					c = new Color(0, 0, 1, 1); // Blue
-					break;
-				case 4:
-					c = new Color(1, 1, 0, 1); // Yellow
-					break;
-				case 5:
-					c = new Color(1, 0, 1, 1); // Purple
-					break;
-				case 6:
-					c = new Color(0, 1, 1, 1); // Cyan
-					break;
-				case 7:
-					c = new Color(1, 1, 1, 1); // Black
-					break;
+			Plugin.RainbowPls += Config.Instance.Speed;
+
+			if(Plugin.RainbowPls > 1f)
+			{
+				Plugin.RainbowPls = 0f;
 			}
 
-			Plugin.RainbowPls++;
-
-			if(Plugin.RainbowPls == 8) {
-				Plugin.RainbowPls = 0;
-			}
-
-			return c;
+			return Color.HSVToRGB(Plugin.RainbowPls, 1f, 1f);
 		}
 	}
 }
