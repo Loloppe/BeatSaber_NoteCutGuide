@@ -17,7 +17,7 @@ namespace NoteCutGuide
 		public virtual float X { get; set; } = 0f;
 		public virtual float Y { get; set; } = 0.3f;
 		public virtual float Z { get; set; } = 0f;
-		public virtual float Angle { get; set; } = 45f;
+		public virtual float Angle { get; set; } = 0f;
 		public virtual float TDAngle { get; set; } = 10f;
 		public virtual bool Color { get; set; } = false;
 		[UseConverter(typeof(ColorConverter))]

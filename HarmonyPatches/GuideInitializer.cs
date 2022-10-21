@@ -15,9 +15,18 @@ namespace NoteCutGuide.HarmonyPatches {
 				return;
 
 			// The guide need to be disabled before returning.
-			if(!Config.Instance.Enabled || Plugin.levelData == null || (Config.Instance.Ignore && noteController.noteData.cutDirection == NoteCutDirection.Any)) {
+			if(!Config.Instance.Enabled || Plugin.levelData == null) {
 				guide.gameObject.SetActive(false);
 				return;
+			}
+
+			if(Config.Instance.Ignore && noteController.noteData.cutDirection == NoteCutDirection.Any) {
+				if(noteController.noteData.colorType == ColorType.ColorA) {
+					Plugin.RedData = null;
+				} else if(noteController.noteData.colorType == ColorType.ColorB) {
+					Plugin.BlueData = null;
+				}
+				guide.gameObject.SetActive(false);
 			}
 
 			// No GN or DA. The plugin is not compatible with Pro Mode/Strict Angle, so removed for performance.
@@ -269,7 +278,7 @@ namespace NoteCutGuide.HarmonyPatches {
 										Plugin.BlueGuideList[i].transform.RotateAround(Plugin.BlueGuideList[i].parent.position, Vector3.forward, -Config.Instance.TDAngle);
 									}
 								}
-							} 
+							}
 						}
 					}
 				}
@@ -441,6 +450,10 @@ namespace NoteCutGuide.HarmonyPatches {
 				Plugin.Blue = currentPos;
 				Plugin.BlueGuide = guide;
 				Plugin.BlueData = noteData;
+			}
+
+			if(Config.Instance.Ignore && noteController.noteData.cutDirection == NoteCutDirection.Any) {
+				return;
 			}
 
 			// Bloom
