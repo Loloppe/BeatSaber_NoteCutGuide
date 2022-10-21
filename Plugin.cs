@@ -3,7 +3,6 @@ using BeatSaberMarkupLanguage.Settings;
 using HarmonyLib;
 using IPA;
 using IPA.Config.Stores;
-using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,9 +14,10 @@ namespace NoteCutGuide {
 		internal static Plugin Instance;
 		internal static IPALogger Log;
 		internal static Harmony harmony;
-
 		internal static Shader DefaultShader;
+		// Rainbow
 		internal static float RainbowPls = 0f;
+		// Modifier
 		internal static BS_Utils.Gameplay.LevelData levelData = null;
 
 		static class BsmlWrapper {
