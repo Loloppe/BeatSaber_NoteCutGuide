@@ -15,12 +15,7 @@ namespace NoteCutGuide.HarmonyPatches {
 				return;
 
 			// The guide need to be disabled before returning.
-			if(!Config.Instance.Enabled) {
-				guide.gameObject.SetActive(false);
-				return;
-			}
-
-			if(Plugin.levelData == null) {
+			if(!Config.Instance.Enabled || Plugin.levelData == null || (Config.Instance.Ignore && noteController.noteData.cutDirection == NoteCutDirection.Any)) {
 				guide.gameObject.SetActive(false);
 				return;
 			}
@@ -487,8 +482,6 @@ namespace NoteCutGuide.HarmonyPatches {
 			// Activate/Disable
 			if(ignore) {
 				lastGuide.gameObject.SetActive(false);
-				guide.gameObject.SetActive(false);
-			} else if(Config.Instance.Ignore && noteController.noteData.cutDirection == NoteCutDirection.Any) {
 				guide.gameObject.SetActive(false);
 			} else {
 				guide.gameObject.SetActive(true);

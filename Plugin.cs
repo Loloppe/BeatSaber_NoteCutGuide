@@ -15,7 +15,7 @@ namespace NoteCutGuide {
 		internal static Plugin Instance;
 		internal static IPALogger Log;
 		internal static Harmony harmony;
-
+		// Angle
 		internal static Vector2 Blue = new Vector2(-1, -1);
 		internal static Vector2 Red = new Vector2(-1, -1);
 		internal static NoteData BlueData = null;
@@ -30,8 +30,11 @@ namespace NoteCutGuide {
 		internal static List<Vector2> RedList = new List<Vector2>();
 		internal static List<Transform> BlueGuideList = new List<Transform>();
 		internal static List<Transform> RedGuideList = new List<Transform>();
+		// Shader
 		internal static Shader DefaultShader;
+		// Rainbow
 		internal static float RainbowPls = 0f;
+		// Modifier
 		internal static BS_Utils.Gameplay.LevelData levelData = null;
 
 		static class BsmlWrapper {

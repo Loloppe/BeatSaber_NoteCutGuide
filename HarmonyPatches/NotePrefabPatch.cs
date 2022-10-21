@@ -29,11 +29,6 @@ namespace NoteCutGuide.HarmonyPatches {
 			var t = guide.AddComponent<RectTransform>();
 
 			t.parent = ____normalBasicNotePrefab.GetComponentInChildren<CutoutEffect>().transform;
-			
-			
-			t.localScale = new Vector3(0.05f, 0.5f, 0.05f);
-			t.localPosition = t.parent.position + new Vector3(0, 0.3f, 0);
-			t.pivot = t.parent.position;
 		}
 	}
 }
