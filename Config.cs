@@ -17,14 +17,11 @@ namespace NoteCutGuide
 		public virtual float X { get; set; } = 0f;
 		public virtual float Y { get; set; } = 0.3f;
 		public virtual float Z { get; set; } = 0f;
-		public virtual float Angle { get; set; } = 0f;
-		public virtual float TDAngle { get; set; } = 10f;
 		public virtual bool Color { get; set; } = false;
 		[UseConverter(typeof(ColorConverter))]
 		public virtual Color Left { get; set; } = new Color(1f, 1f, 1f, 1f);
 		[UseConverter(typeof(ColorConverter))]
 		public virtual Color Right { get; set; } = new Color(1f, 1f, 1f, 1f);
-		public virtual bool Ignore { get; set; } = true;
 		public virtual bool Bloom { get; set; } = false;
 		public virtual float Brightness { get; set; } = 0.75f;
 		public virtual bool Rainbow { get; set; } = false;
