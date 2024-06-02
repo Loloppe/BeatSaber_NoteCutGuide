@@ -2,9 +2,9 @@
   "id": "NoteCutGuide",
   "name": "NoteCutGuide",
   "author": "Kinsi55 and Loloppe",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "",
-  "gameVersion": "1.26.0",
+  "gameVersion": "1.36.2",
   "dependsOn": {
     "BSIPA": "^4.0.5"
   },

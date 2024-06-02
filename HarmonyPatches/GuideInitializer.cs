@@ -140,7 +140,7 @@ namespace NoteCutGuide.HarmonyPatches {
 			// This check is to skip the first blue and red note detected (only angle-wise)
 			if(lastPos != new Vector2(-1, -1) && lastND != null) {
 				// Find time in beat
-				var bpm = BS_Utils.Plugin.LevelData.GameplayCoreSceneSetupData.difficultyBeatmap.level.beatsPerMinute;
+				var bpm = BS_Utils.Plugin.LevelData.GameplayCoreSceneSetupData.beatmapLevel.beatsPerMinute;
 				time = Helper.SecToBeat(noteData.time, bpm);
 				lastTime = Helper.SecToBeat(lastND.time, bpm);
 

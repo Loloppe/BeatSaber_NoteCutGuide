@@ -12,26 +12,25 @@
     <Company />
     <Authors>Kinsi55</Authors>
     <Copyright>Kinsi55</Copyright>
-    <RepositoryType></RepositoryType>
-    <RepositoryUrl></RepositoryUrl>
-    <Description></Description>
+    <RepositoryType>
+    </RepositoryType>
+    <RepositoryUrl>
+    </RepositoryUrl>
+    <Description>
+    </Description>
     <Platforms>x64</Platforms>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
-
   <Import Project="SuppressRefereces.targets" />
-
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>portable</DebugType>
     <OutputPath>bin\Debug</OutputPath>
   </PropertyGroup>
-
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DebugType>none</DebugType>
     <OutputPath>bin\</OutputPath>
   </PropertyGroup>
-
   <PropertyGroup Condition="$(DefineConstants.Contains('CIBuild')) OR '$(NCrunch)' == '1'">
     <DisableCopyToPlugins>True</DisableCopyToPlugins>
   </PropertyGroup>
@@ -39,7 +38,6 @@
     <DisableCopyToPlugins>True</DisableCopyToPlugins>
     <DisableZipRelease>True</DisableZipRelease>
   </PropertyGroup>
-
   <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>$(BeatSaberDir)\Libs\0Harmony.dll</HintPath>
@@ -47,21 +45,38 @@
     <Reference Include="BeatmapCore">
       <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\BeatmapCore.dll</HintPath>
     </Reference>
-	<Reference Include="BeatmapCore">
-	  <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\GameplayCore.dll</HintPath>
-	</Reference>
+    <Reference Include="BeatmapCore">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\GameplayCore.dll</HintPath>
+    </Reference>
+    <Reference Include="BGLib.AppFlow">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\BGLib.AppFlow.dll</HintPath>
+    </Reference>
+    <Reference Include="BGLib.UnityExtension">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\BGLib.UnityExtension.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="BSML">
       <HintPath>$(BeatSaberDir)\Plugins\BSML.dll</HintPath>
     </Reference>
     <Reference Include="BS_Utils">
       <HintPath>$(BeatSaberDir)\Plugins\BS_Utils.dll</HintPath>
     </Reference>
-    <Reference Include="System"></Reference>
-    <Reference Include="System.Core"></Reference>
-    <Reference Include="System.Xml.Linq"></Reference>
-    <Reference Include="System.Data.DataSetExtensions"></Reference>
-    <Reference Include="System.Data"></Reference>
-    <Reference Include="System.Xml"></Reference>
+    <Reference Include="DataModels">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\DataModels.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+    </Reference>
+    <Reference Include="System.Core">
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+    </Reference>
+    <Reference Include="System.Data">
+    </Reference>
+    <Reference Include="System.Xml">
+    </Reference>
     <Reference Include="Main">
       <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\Main.dll</HintPath>
     </Reference>
@@ -101,7 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="manifest.json" />
-	<EmbeddedResource Include="Views\settings.bsml" />
+    <EmbeddedResource Include="Views\settings.bsml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BeatSaberModdingTools.Tasks">
@@ -111,15 +126,19 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Update="System.Drawing"></Reference>
+    <Reference Update="System.Drawing">
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Update="System.IO.Compression.FileSystem"></Reference>
+    <Reference Update="System.IO.Compression.FileSystem">
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Update="System.Numerics"></Reference>
+    <Reference Update="System.Numerics">
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Update="System.Runtime.Serialization"></Reference>
+    <Reference Update="System.Runtime.Serialization">
+    </Reference>
   </ItemGroup>
 </Project>
