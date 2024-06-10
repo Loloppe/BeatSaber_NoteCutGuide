@@ -22,6 +22,7 @@ namespace NoteCutGuide
 		public virtual Color Left { get; set; } = new Color(1f, 1f, 1f, 1f);
 		[UseConverter(typeof(ColorConverter))]
 		public virtual Color Right { get; set; } = new Color(1f, 1f, 1f, 1f);
+		public virtual bool HMD { get; set; } = false;
 		public virtual bool Bloom { get; set; } = false;
 		public virtual float Brightness { get; set; } = 0.75f;
 		public virtual bool Rainbow { get; set; } = false;
@@ -40,8 +41,8 @@ namespace NoteCutGuide
         /// </summary>
         public virtual void Changed()
         {
-            // Do stuff when the config is changed.
-        }
+			// Do stuff when the config is changed.
+		}
 
         /// <summary>
         /// Call this to have BSIPA copy the values from <paramref name="other"/> into this config.

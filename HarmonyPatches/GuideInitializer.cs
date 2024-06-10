@@ -11,6 +11,13 @@ namespace NoteCutGuide.HarmonyPatches {
 		static void Postfix(ColorNoteVisuals __instance, NoteControllerBase noteController) {
 			var guide = noteController.transform.Find("NoteCube/NoteCutGuide");
 
+			// This is probably not optimal, but idk how to do this better
+			if(Config.Instance.HMD) {
+				CameraUtils.Core.VisibilityUtils.SetLayerRecursively(guide, CameraUtils.Core.VisibilityLayer.HmdOnly);
+			} else {
+				CameraUtils.Core.VisibilityUtils.SetLayerRecursively(guide, CameraUtils.Core.VisibilityLayer.Default);
+			}
+
 			if(guide == null)
 				return;
 
