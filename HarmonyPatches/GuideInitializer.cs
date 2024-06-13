@@ -11,13 +11,6 @@ namespace NoteCutGuide.HarmonyPatches {
 		static void Postfix(ColorNoteVisuals __instance, NoteControllerBase noteController) {
 			var guide = noteController.transform.Find("NoteCube/NoteCutGuide");
 
-			// This is probably not optimal, but idk how to do this better
-			if(Config.Instance.HMD) {
-				CameraUtils.Core.VisibilityUtils.SetLayerRecursively(guide, CameraUtils.Core.VisibilityLayer.HmdOnly);
-			} else {
-				CameraUtils.Core.VisibilityUtils.SetLayerRecursively(guide, CameraUtils.Core.VisibilityLayer.Default);
-			}
-
 			if(guide == null)
 				return;
 
@@ -39,10 +32,12 @@ namespace NoteCutGuide.HarmonyPatches {
 				return;
 			}
 
-			// Disable current and last guide if necessary, we still need to save the data before.
-			var ignore = false;
-
-			var noteData = noteController.noteData;
+			// This is probably not optimal, but idk how to do this better
+			if(Config.Instance.HMD) {
+				CameraUtils.Core.VisibilityUtils.SetLayerRecursively(guide, CameraUtils.Core.VisibilityLayer.HmdOnly);
+			} else {
+				CameraUtils.Core.VisibilityUtils.SetLayerRecursively(guide, CameraUtils.Core.VisibilityLayer.Default);
+			}
 
 			// Reset the position just in case
 			guide.position = guide.parent.position;
@@ -61,41 +56,42 @@ namespace NoteCutGuide.HarmonyPatches {
 			} else {
 				renderer.material.shader = Plugin.DefaultShader;
 			}
-
+			
 			if(Config.Instance.Rainbow) { // Random colors
 				if(Config.Instance.Bloom) {
-					renderer.material.color = ColorExtensions.ColorWithAlpha(renderer.material.color = Helper.Rainbow(), Config.Instance.Brightness);
+					renderer.material.color = ColorWithAlpha(renderer.material.color = Helper.Rainbow(), Config.Instance.Brightness);
 				} else {
-					renderer.material.color = ColorExtensions.ColorWithAlpha(renderer.material.color = Helper.Rainbow(), 1f); 
+					renderer.material.color = ColorWithAlpha(renderer.material.color = Helper.Rainbow(), 1f); 
 				}
 			} else if(Config.Instance.Color) { // Custom colors
 				if(Config.Instance.Bloom) {
 					if(noteController.noteData.colorType == ColorType.ColorA) { 
-						renderer.material.color = ColorExtensions.ColorWithAlpha(Config.Instance.Left, Config.Instance.Brightness);
+						renderer.material.color = ColorWithAlpha(Config.Instance.Left, Config.Instance.Brightness);
 					} else if(noteController.noteData.colorType == ColorType.ColorB) {
-						renderer.material.color = ColorExtensions.ColorWithAlpha(Config.Instance.Right, Config.Instance.Brightness);
+						renderer.material.color = ColorWithAlpha(Config.Instance.Right, Config.Instance.Brightness);
 					}
 				} else {
 					if(noteController.noteData.colorType == ColorType.ColorA) { 
-						renderer.material.color = ColorExtensions.ColorWithAlpha(Config.Instance.Left, 1f);
+						renderer.material.color = ColorWithAlpha(Config.Instance.Left, 1f);
 					} else if(noteController.noteData.colorType == ColorType.ColorB) {
-						renderer.material.color = ColorExtensions.ColorWithAlpha(Config.Instance.Right, 1f);
+						renderer.material.color = ColorWithAlpha(Config.Instance.Right, 1f);
 					}
 				}
 			} else { // Default colors
 				if(Config.Instance.Bloom) {
-					renderer.material.color = ColorExtensions.ColorWithAlpha(ColorNoteVisuals_noteColor(ref __instance), Config.Instance.Brightness);
+					renderer.material.color = ColorWithAlpha(ColorNoteVisuals_noteColor(ref __instance), Config.Instance.Brightness);
 				} else {
-					renderer.material.color = ColorExtensions.ColorWithAlpha(ColorNoteVisuals_noteColor(ref __instance), 1f);
+					renderer.material.color = ColorWithAlpha(ColorNoteVisuals_noteColor(ref __instance), 1f);
 				}
 			}
 
 			// Activate/Disable
-			if(ignore) {
-				guide.gameObject.SetActive(false);
-			} else {
-				guide.gameObject.SetActive(true);
-			}
+			guide.gameObject.SetActive(true);
+		}
+
+		public static Color ColorWithAlpha(this Color color, float alpha) {
+			color.a = alpha;
+			return color;
 		}
 	}
 }
