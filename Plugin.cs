@@ -3,7 +3,6 @@ using BeatSaberMarkupLanguage.Settings;
 using HarmonyLib;
 using IPA;
 using IPA.Config.Stores;
-using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,29 +22,6 @@ namespace NoteCutGuide {
 		// Modifier
 		internal static BS_Utils.Gameplay.LevelData levelData = null;
 
-		static class BsmlWrapper {
-			static readonly bool hasBsml = IPA.Loader.PluginManager.GetPluginFromId("BeatSaberMarkupLanguage") != null;
-
-			public static void EnableUI() {
-				void wrap() => BSMLSettings.instance.AddSettingsMenu("NoteCutGuide", "NoteCutGuide.Views.settings.bsml", Config.Instance);
-				void wrap2() => GameplaySetup.instance.AddTab("NoteCutGuide", "NoteCutGuide.Views.settings.bsml", Config.Instance, MenuType.All);
-
-				if(hasBsml) {
-					wrap();
-					wrap2();
-				}
-			}
-			public static void DisableUI() {
-				void wrap() => BSMLSettings.instance.RemoveSettingsMenu(Config.Instance);
-				void wrap2() => GameplaySetup.instance.RemoveTab("NoteCutGuide");
-
-				if(hasBsml) {
-					wrap();
-					wrap2();
-				}
-			}
-		}
-
 		[Init]
 		public Plugin(IPALogger logger, IPA.Config.Config conf) {
 			Instance = this;
@@ -58,11 +34,12 @@ namespace NoteCutGuide {
 		public void OnEnable() {
 			SceneManager.activeSceneChanged += OnActiveSceneChanged;
 			harmony.PatchAll(Assembly.GetExecutingAssembly());
-			BsmlWrapper.EnableUI();
+			BSMLSettings.instance.AddSettingsMenu("NoteCutGuide", "NoteCutGuide.Views.settings.bsml", Config.Instance);
+			GameplaySetup.instance.AddTab("NoteCutGuide", "NoteCutGuide.Views.settings.bsml", Config.Instance, MenuType.All);
 		}
 
 		public void OnActiveSceneChanged(Scene arg0, Scene scene) {
-			if(BS_Utils.SceneNames.Game == "GameCore") {
+			if(BS_Utils.SceneNames.Game == scene.name) {
 				levelData = BS_Utils.Plugin.LevelData;
 			}
 		}
@@ -71,7 +48,8 @@ namespace NoteCutGuide {
 		public void OnDisable() {
 			SceneManager.activeSceneChanged -= OnActiveSceneChanged;
 			harmony.UnpatchSelf();
-			BsmlWrapper.DisableUI();
+			BSMLSettings.instance.RemoveSettingsMenu(Config.Instance);
+			GameplaySetup.instance.RemoveTab("NoteCutGuide");
 		}
 	}
 }

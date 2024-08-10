@@ -6,7 +6,7 @@
   "description": "",
   "gameVersion": "1.37.2",
   "dependsOn": {
-    "BSIPA": "^4.0.5",
+    "BSIPA": "^4.3.4",
     "BeatSaberMarkupLanguage": "^1.11.4",
     "CameraUtils": "^1.0.7",
     "BS Utils":  "^1.14.0"
