@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
-using UnityEngine;
 using NoteCutGuide.Algorithm;
+using UnityEngine;
 
 namespace NoteCutGuide.HarmonyPatches {
 	[HarmonyPatch(typeof(ColorNoteVisuals), nameof(ColorNoteVisuals.HandleNoteControllerDidInit))]
@@ -19,8 +19,7 @@ namespace NoteCutGuide.HarmonyPatches {
 			GameObject.Destroy(guide.GetComponent<BoxCollider>());
 			var renderer = guide.GetComponent<MeshRenderer>();
 			var NoteCube = noteController.transform.Find("NoteCube");
-			renderer.material = NoteCube.GetComponentInChildren<MeshRenderer>().material;
-			renderer.material.shader = NoteCube.GetComponentInChildren<MeshRenderer>().material.shader;
+			renderer.sharedMaterial = NoteCube.GetComponentInChildren<MeshRenderer>().sharedMaterial;
 			guide.name = "NoteCutGuide";
 			guide.transform.SetParent(NoteCube.transform);
 			var data = noteController.noteData;
@@ -87,21 +86,16 @@ namespace NoteCutGuide.HarmonyPatches {
 			color.a = alpha;
 			return color;
 		}
+	}
 
-		[HarmonyPatch(typeof(GameNoteController), nameof(GameNoteController.NoteDidPassMissedMarker))]
-		static class GuideDestroy {
-			static void Prefix(ref BoxCuttableBySaber[] ____bigCuttableBySaberList) {
-				if (____bigCuttableBySaberList != null) {
-					var NoteCube = ____bigCuttableBySaberList[0].transform.parent;
-					if(NoteCube != null) {
-						var NoteCutGuide = NoteCube.Find("NoteCutGuide").gameObject;
-						if(NoteCutGuide != null) {
-							// No choice but to destroy the guide manually, notes get re-used for some reason and older guide stay.
-							// I'm probably not attaching the guide the right way or something, but this work at least.
-							GameObject.DestroyImmediate(NoteCutGuide);
-						}
-					}
-				}
+	[HarmonyPatch(typeof(NoteJump), nameof(NoteJump.ManualUpdate))]
+	static class DestroyGuide {
+		static void Prefix(ref Transform ____rotatedObject, ref PlayerTransforms ____playerTransforms) {
+			// Compatible with Custom Notes and replay, a bit wacky but oh well.
+			if (____rotatedObject.position.z <= ____playerTransforms.headPseudoLocalPos.z + 2.5f) {
+				var guide = ____rotatedObject?.Find("NoteCutGuide");
+				if(guide != null)
+					GameObject.DestroyImmediate(guide.gameObject);
 			}
 		}
 	}
