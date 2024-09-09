@@ -27,15 +27,19 @@ namespace NoteCutGuide {
 		[OnEnable]
 		public void OnEnable() {
 			harmony.PatchAll(Assembly.GetExecutingAssembly());
-			BSMLSettings.instance.AddSettingsMenu("NoteCutGuide", "NoteCutGuide.Views.settings.bsml", Config.Instance);
-			GameplaySetup.instance.AddTab("NoteCutGuide", "NoteCutGuide.Views.settings.bsml", Config.Instance, MenuType.All);
+			BS_Utils.Utilities.BSEvents.lateMenuSceneLoadedFresh += LateMenuSceneLoadedFresh;
+		}
+
+		public void LateMenuSceneLoadedFresh(ScenesTransitionSetupDataSO scene) {
+			BSMLSettings.Instance.AddSettingsMenu("NoteCutGuide", "NoteCutGuide.Views.settings.bsml", Config.Instance);
+			GameplaySetup.Instance.AddTab("NoteCutGuide", "NoteCutGuide.Views.settings.bsml", Config.Instance, MenuType.All);
 		}
 
 		[OnDisable]
 		public void OnDisable() {
 			harmony.UnpatchSelf();
-			BSMLSettings.instance.RemoveSettingsMenu(Config.Instance);
-			GameplaySetup.instance.RemoveTab("NoteCutGuide");
+			BSMLSettings.Instance.RemoveSettingsMenu(Config.Instance);
+			GameplaySetup.Instance.RemoveTab("NoteCutGuide");
 		}
 	}
 }
