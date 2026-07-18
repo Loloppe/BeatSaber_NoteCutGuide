@@ -30,7 +30,7 @@ namespace NoteCutGuide {
 			BS_Utils.Utilities.BSEvents.lateMenuSceneLoadedFresh += LateMenuSceneLoadedFresh;
 		}
 
-		public void LateMenuSceneLoadedFresh(ScenesTransitionSetupDataSO scene) {
+		public void LateMenuSceneLoadedFresh(ScenesTransitionSetupData scene) {
 			BSMLSettings.Instance.AddSettingsMenu("NoteCutGuide", "NoteCutGuide.Views.settings.bsml", Config.Instance);
 			GameplaySetup.Instance.AddTab("NoteCutGuide", "NoteCutGuide.Views.settings.bsml", Config.Instance, MenuType.All);
 		}

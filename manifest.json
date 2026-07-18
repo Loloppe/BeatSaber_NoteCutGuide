@@ -2,13 +2,13 @@
   "id": "NoteCutGuide",
   "name": "NoteCutGuide",
   "author": "Kinsi55 and Loloppe",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "",
-  "gameVersion": "1.37.5",
+  "gameVersion": "1.44.2",
   "dependsOn": {
-    "BSIPA": "^4.3.4",
-    "BeatSaberMarkupLanguage": "^1.11.4",
+    "BSIPA": "^4.3.5",
+    "BeatSaberMarkupLanguage": "^1.14.2",
     "CameraUtils": "^1.0.7",
-    "BS Utils":  "^1.14.0"
+    "BS Utils":  "^1.14.4"
   }
 }
